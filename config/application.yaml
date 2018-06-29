@@ -1,0 +1,15 @@
+camunda.bpm:
+  admin-user:
+    id: admin
+    password: admin 
+    firstName: administrator
+  filter:
+    create: All tasks
+  buildresponseurl: http://135.16.101.85:8069/AECPortalMgmt/edgeSites/status
+logging:
+  file: /var/log/scriptexecutor.log
+  level:
+    com.camunda.bpm: debug
+    org.camunda.bpm: warn
+    org.springframework: warn
+spring.transaction.default-timeout:  21600

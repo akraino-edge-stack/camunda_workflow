@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0ryxuei" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.16.0">
+  <bpmn:process id="deploy" name="deploy" isExecutable="true" camunda:versionTag="1">
+    <bpmn:sequenceFlow id="SequenceFlow_125l5l0" sourceRef="StartEvent_1" targetRef="Task_19usii1" />
+    <bpmn:startEvent id="StartEvent_1" name="ScriptExecutionStartingPoint">
+      <bpmn:outgoing>SequenceFlow_125l5l0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_19usii1" name="ScriptExecutorTask" camunda:delegateExpression="#{deployScriptExecutorTaskDelegate}">
+      <bpmn:incoming>SequenceFlow_125l5l0</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0ji1v0x</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0ji1v0x" sourceRef="Task_19usii1" targetRef="Task_1jo0y1o" />
+    <bpmn:serviceTask id="Task_1jo0y1o" name="WinSCPScriptExecutortask" camunda:delegateExpression="#{winScpScriptDelegate}">
+      <bpmn:incoming>SequenceFlow_0ji1v0x</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1jh4nm3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1jh4nm3" sourceRef="Task_1jo0y1o" targetRef="DeployRemoteexecutor" />
+    <bpmn:serviceTask id="Task_0ss7pht" name="Deploymentverfier" camunda:delegateExpression="#{DeployRemoteDeploymentVerificationDelegate}">
+      <bpmn:incoming>SequenceFlow_064ccvc</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0e9qo9c</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_064ccvc" sourceRef="DeployRemoteexecutor" targetRef="Task_0ss7pht" />
+    <bpmn:serviceTask id="DeployRemoteexecutor" name="Deploy Remote Script ecutor" camunda:delegateExpression="#{deployRemoteScriptExecutorTaskDelegate}">
+      <bpmn:incoming>SequenceFlow_1jh4nm3</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_064ccvc</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0e9qo9c" sourceRef="Task_0ss7pht" targetRef="Postverification" />
+    <bpmn:serviceTask id="Postverification" name="Post verification" camunda:delegateExpression="#{deployPostVerficationRemoteScriptExecutor}">
+      <bpmn:incoming>SequenceFlow_0e9qo9c</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:textAnnotation id="TextAnnotation_1p71e63">
+      <bpmn:text>Rest</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0bjstyh" sourceRef="StartEvent_1" targetRef="TextAnnotation_1p71e63" />
+    <bpmn:textAnnotation id="TextAnnotation_00kckqx">
+      <bpmn:text>Script execution Task</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_16sojmg" sourceRef="Task_19usii1" targetRef="TextAnnotation_00kckqx" />
+    <bpmn:textAnnotation id="TextAnnotation_08xc1st">
+      <bpmn:text>Win Scp Script Executor</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_05u86o6" sourceRef="Task_1jo0y1o" targetRef="TextAnnotation_08xc1st" />
+    <bpmn:textAnnotation id="TextAnnotation_0zgafn7">
+      <bpmn:text>Deployment verifier</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0h3xbpb" sourceRef="Task_0ss7pht" targetRef="TextAnnotation_0zgafn7" />
+    <bpmn:textAnnotation id="TextAnnotation_071um3l">
+      <bpmn:text>Remote Script Executor</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0xluc8y" sourceRef="DeployRemoteexecutor" targetRef="TextAnnotation_071um3l" />
+    <bpmn:textAnnotation id="TextAnnotation_19qps2u">
+      <bpmn:text>Post verification </bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1d4h61h" sourceRef="Postverification" targetRef="TextAnnotation_19qps2u" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="deploy">
+      <bpmndi:BPMNEdge id="SequenceFlow_125l5l0_di" bpmnElement="SequenceFlow_125l5l0">
+        <di:waypoint x="330" y="278" />
+        <di:waypoint x="368" y="278" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="387" y="265" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1p71e63_di" bpmnElement="TextAnnotation_1p71e63">
+        <dc:Bounds x="339" y="182" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0bjstyh_di" bpmnElement="Association_0bjstyh">
+        <di:waypoint x="324" y="265" />
+        <di:waypoint x="375" y="212" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_00kckqx_di" bpmnElement="TextAnnotation_00kckqx">
+        <dc:Bounds x="557" y="166" width="100" height="42" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_16sojmg_di" bpmnElement="Association_16sojmg">
+        <di:waypoint x="468" y="253" />
+        <di:waypoint x="565" y="208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="294" y="260" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="270" y="296" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0y4nqij_di" bpmnElement="Task_19usii1">
+        <dc:Bounds x="368" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ji1v0x_di" bpmnElement="SequenceFlow_0ji1v0x">
+        <di:waypoint x="468" y="278" />
+        <di:waypoint x="527" y="278" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="582" y="265" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_08xc1st_di" bpmnElement="TextAnnotation_08xc1st">
+        <dc:Bounds x="707" y="166" width="100" height="42" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_05u86o6_di" bpmnElement="Association_05u86o6">
+        <di:waypoint x="627" y="252" />
+        <di:waypoint x="717" y="208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0ek6xsx_di" bpmnElement="Task_1jo0y1o">
+        <dc:Bounds x="527" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0zgafn7_di" bpmnElement="TextAnnotation_0zgafn7">
+        <dc:Bounds x="965" y="357" width="100" height="42" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0h3xbpb_di" bpmnElement="Association_0h3xbpb">
+        <di:waypoint x="950" y="317" />
+        <di:waypoint x="992" y="357" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1jh4nm3_di" bpmnElement="SequenceFlow_1jh4nm3">
+        <di:waypoint x="627" y="278" />
+        <di:waypoint x="689" y="278" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="704" y="265" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0pazttq_di" bpmnElement="Task_0ss7pht">
+        <dc:Bounds x="858" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_064ccvc_di" bpmnElement="SequenceFlow_064ccvc">
+        <di:waypoint x="789" y="278" />
+        <di:waypoint x="858" y="278" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="945.5" y="265" width="0" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0gdjdwl_di" bpmnElement="DeployRemoteexecutor">
+        <dc:Bounds x="689" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_071um3l_di" bpmnElement="TextAnnotation_071um3l">
+        <dc:Bounds x="707" y="353" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0xluc8y_di" bpmnElement="Association_0xluc8y">
+        <di:waypoint x="747" y="318" />
+        <di:waypoint x="754" y="353" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0e9qo9c_di" bpmnElement="SequenceFlow_0e9qo9c">
+        <di:waypoint x="958" y="278" />
+        <di:waypoint x="1029" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1vpzk0r_di" bpmnElement="Postverification">
+        <dc:Bounds x="1029" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_19qps2u_di" bpmnElement="TextAnnotation_19qps2u">
+        <dc:Bounds x="1129" y="158" width="100" height="41" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1d4h61h_di" bpmnElement="Association_1d4h61h">
+        <di:waypoint x="1119" y="238" />
+        <di:waypoint x="1159" y="199" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

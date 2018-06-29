@@ -1,0 +1,14 @@
+camunda.bpm:
+  admin-user:
+    id: admin
+    password: admin 
+    firstName: administrator
+  filter:
+    create: All tasks
+  buildresponseurl: http://localhost:8069/AECPortalMgmt/install/status/
+logging:
+  file: C:/tmp/scriptexecutor.log
+  level:
+    com.camunda.bpm: debug
+    org.camunda.bpm: warn
+    org.springframework: warn
