@@ -6,9 +6,10 @@ camunda.bpm:
   filter:
     create: All tasks
   buildresponseurl: http://localhost:8069/AECPortalMgmt/install/status/
+  tokenId: YWthZG1pbg==:9FCBA840BD274292F4DCC995BECE3D09
 logging:
   file: C:/tmp/scriptexecutor.log
   level:
-    com.camunda.bpm: debug
+    com.akraino.bpm: debug
     org.camunda.bpm: warn
     org.springframework: warn

@@ -38,12 +38,12 @@ public class ScriptExecutionServiceImpl implements ScriptExecutionService{
 		try {
 			logger.debug("Executing the script.............");
 			Process p = Runtime.getRuntime().exec(filepatch);
-			p.waitFor();
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line = "";
             while ((line = input.readLine()) != null) {
             	logger.debug(line);
             }
+            p.waitFor();
             logger.debug("Script exit code :"+p.exitValue());
             if(p.exitValue()!=0) {
             	throw new TaskExecutorException("problem while executing the script . exist code :"+p.exitValue());
