@@ -18,23 +18,28 @@ package com.akraino.bpm.model;
 
 public class BuildResponse {
 	
+	private String siteName;
 	private String buildStatus;
 	private String createTarStatus;
 	private String genesisNodeStatus;
 	private String deployToolsStatus;
 	private String deployStatus;
-	private String siteName;
-	
+	private String onapStatus;
+	private String vCDNStatus;
+	private String tempestStatus;
 	
 	public BuildResponse(String buildStatus, String createTarStatus, String genesisNodeStatus, String deployToolsStatus,String deployStatus,
-			String siteName) {
+			String siteName,String onapStatus,String vCDNStatus,String tempestStatus) {
 		super();
 		this.buildStatus = buildStatus;
 		this.createTarStatus = createTarStatus;
 		this.genesisNodeStatus = genesisNodeStatus;
 		this.deployToolsStatus = deployToolsStatus;
 		this.deployStatus=deployStatus;
-		this.siteName = "siteName";
+		this.siteName = siteName;
+		this.onapStatus=onapStatus;
+		this.vCDNStatus=vCDNStatus;
+		this.tempestStatus=tempestStatus;
 	}
 
 
@@ -97,17 +102,34 @@ public class BuildResponse {
 	}
 
 
-	@Override
-	public String toString() {
-		return "BuildResponse [buildStatus=" + buildStatus + ", createTarStatus=" + createTarStatus
-				+ ", genesisNodeStatus=" + genesisNodeStatus + ", deployToolsStatus=" + deployToolsStatus
-				+ ", deployStatus=" + deployStatus + ", siteName=" + siteName + "]";
+	public String getOnapStatus() {
+		return onapStatus;
 	}
-	
 
 
-	
-	
-	
+	public void setOnapStatus(String onapStatus) {
+		this.onapStatus = onapStatus;
+	}
 
+
+	public String getvCDNStatus() {
+		return vCDNStatus;
+	}
+
+
+	public void setvCDNStatus(String vCDNStatus) {
+		this.vCDNStatus = vCDNStatus;
+	}
+
+
+	public String getTempestStatus() {
+		return tempestStatus;
+	}
+
+
+	public void setTempestStatus(String tempestStatus) {
+		this.tempestStatus = tempestStatus;
+	}
+
+	
 }

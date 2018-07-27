@@ -18,6 +18,7 @@ package com.akraino.bpm.model;
 
 public class Onap {
 	
+	private String sitename;
 	private String remoteserver;
 	private String username;
 	private String  password;
@@ -34,6 +35,20 @@ public class Onap {
 	String filetransferparams;
 	
 	
+	
+	
+	
+	
+	public String getSitename() {
+		return sitename;
+	}
+
+
+	public void setSitename(String sitename) {
+		this.sitename = sitename;
+	}
+
+
 	public String getSrcdir() {
 		return srcdir;
 	}
@@ -182,12 +197,14 @@ public class Onap {
 
 	@Override
 	public String toString() {
-		return "Onap [remoteserver=" + remoteserver + ", username=" + username + ", password=" + password
-				+ ", portnumber=" + portnumber + ", srcdir=" + srcdir + ", destdir=" + destdir + ", filename="
-				+ filename + ", fileparams=" + fileparams + ", deploymentverifier=" + deploymentverifier
-				+ ", verifierparams=" + verifierparams + ", noofiterations=" + noofiterations + ", waittime=" + waittime
-				+ ", filetrasferscript=" + filetrasferscript + ", filetransferparams=" + filetransferparams + "]";
+		return "Onap [sitename=" + sitename + ", remoteserver=" + remoteserver + ", username=" + username
+				+ ", password=" + password + ", portnumber=" + portnumber + ", srcdir=" + srcdir + ", destdir="
+				+ destdir + ", filename=" + filename + ", fileparams=" + fileparams + ", deploymentverifier="
+				+ deploymentverifier + ", verifierparams=" + verifierparams + ", noofiterations=" + noofiterations
+				+ ", waittime=" + waittime + ", filetrasferscript=" + filetrasferscript + ", filetransferparams="
+				+ filetransferparams + "]";
 	}
+
 
 
  }
