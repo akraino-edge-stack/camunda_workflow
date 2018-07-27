@@ -18,6 +18,7 @@ package com.akraino.bpm.model;
 
 public class Airship {
 	
+	private String sitename;
 	private String filepath;
 	private String fileparams;
 	private String winscpdir;
@@ -105,12 +106,19 @@ public class Airship {
 	public void setWinscpdir(String winscpdir) {
 		this.winscpdir = winscpdir;
 	}
+	public String getSitename() {
+		return sitename;
+	}
+	public void setSitename(String sitename) {
+		this.sitename = sitename;
+	}
 	@Override
 	public String toString() {
-		return "Airship [filepath=" + filepath + ", fileparams=" + fileparams + ", winscpdir=" + winscpdir
-				+ ", winscpfilepath=" + winscpfilepath + ", winscpfileparams=" + winscpfileparams + ", remotserver="
-				+ remotserver + ", port=" + port + ", username=" + username + ", password=" + password + ", destdir="
-				+ destdir + ", remotefilename=" + remotefilename + ", remotefileparams=" + remotefileparams + "]";
+		return "Airship [sitename=" + sitename + ", filepath=" + filepath + ", fileparams=" + fileparams
+				+ ", winscpdir=" + winscpdir + ", winscpfilepath=" + winscpfilepath + ", winscpfileparams="
+				+ winscpfileparams + ", remotserver=" + remotserver + ", port=" + port + ", username=" + username
+				+ ", password=" + password + ", destdir=" + destdir + ", remotefilename=" + remotefilename
+				+ ", remotefileparams=" + remotefileparams + "]";
 	}
 	
 	

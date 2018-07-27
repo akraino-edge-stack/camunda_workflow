@@ -44,18 +44,22 @@ public class DeploymentVerificationDelegate implements JavaDelegate {
 	
 	public void execute(DelegateExecution ctx) throws Exception {
 		
-		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started", "Boston"));
+		String sitename=(String)ctx.getVariable("sitename");
+		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started",sitename,null,null,null));
+		
 		try {
 			String  verifierFilepath=(String)ctx.getVariable("verifier");
 			int waittime=(Integer)ctx.getVariable("waittime");
 			int iterations=(Integer)ctx.getVariable("iterations");
+			
+			
 			logger.debug("task execution started  filename : {} , waittime : {},No of iterations :{}",verifierFilepath,waittime,iterations);
 			deploymentVerificationService.executeScript(verifierFilepath,waittime,iterations);
 		}catch(TaskExecutorException ex) {
 			throw ex;
 		}
 		
-		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","not started","Boston"));
+		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","not started",sitename,null,null,null));
 	}
 
 }

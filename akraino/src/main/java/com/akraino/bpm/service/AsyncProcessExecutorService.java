@@ -16,10 +16,24 @@
 
 package com.akraino.bpm.service;
 
-public interface RemoteDeploymentVerificationService {
-	
-	public void executeScript(String remoteserver,String username,String password,int portnumber,String filename,
-			String fileparams,String srcdir,String destdir,int waittime,int iterations,String command);
-	
+import com.akraino.bpm.model.Airship;
+import com.akraino.bpm.model.Apache;
+import com.akraino.bpm.model.Build;
+import com.akraino.bpm.model.Deploy;
+import com.akraino.bpm.model.Onap;
+import com.akraino.bpm.model.Tempest;
 
+public interface AsyncProcessExecutorService {
+	
+	public void executeAirshipProcess(Airship airship);
+	
+	public void executeBuildProcess(Build build);
+	
+	public void executeDeployProcess(Deploy deploy);
+	
+	public void executeOnapProcess(Onap onap);
+	
+	public void executeTempestProcess(Tempest tempest);
+	
+	public void executeApacheProcess(Apache apache);
 }
