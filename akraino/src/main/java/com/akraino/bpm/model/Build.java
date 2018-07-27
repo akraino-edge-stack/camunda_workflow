@@ -18,11 +18,20 @@ package com.akraino.bpm.model;
 
 public class Build {
 	
+	private String sitename;
 	private String filepath;
 	private String fileparams;
 	private String targetfolder;
 	
 	
+	
+	
+	public String getSitename() {
+		return sitename;
+	}
+	public void setSitename(String sitename) {
+		this.sitename = sitename;
+	}
 	public String getFilepath() {
 		return filepath;
 	}
@@ -41,9 +50,11 @@ public class Build {
 	public void setTargetfolder(String targetfolder) {
 		this.targetfolder = targetfolder;
 	}
+	
 	@Override
 	public String toString() {
-		return "Build [filepath=" + filepath + ", fileparams=" + fileparams + ", targetfolder=" + targetfolder + "]";
+		return "Build [sitename=" + sitename + ", filepath=" + filepath + ", fileparams=" + fileparams
+				+ ", targetfolder=" + targetfolder + "]";
 	}
 	
 	

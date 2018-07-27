@@ -51,8 +51,9 @@ public class DeployRemoteScriptExecutorTaskDelegate implements JavaDelegate {
 		String fileparams=(String)ctx.getVariable("fileparams");
 		String  srcdir=(String)ctx.getVariable("srcdir");
 		String destdir=(String)ctx.getVariable("destdir");
+		String sitename=(String)ctx.getVariable("sitename");
 		
-		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "inprogress", "not started","not started", "Boston"));
+		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "inprogress", "not started","not started", sitename,null,null,null));
 		logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} ,fileparams={},src dir={},dest dir={}",
 				remotserver,portnumner,username,password,filename,fileparams,srcdir,destdir);
 		
