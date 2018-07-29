@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -44,17 +45,19 @@ public class DeployResponseSenderServiceImpl implements DeployResponseSenderServ
 	public void sendResponse(BuildResponse response) {
 		try {
 			logger.debug(response.toString());
-			HttpEntity<BuildResponse> request = new HttpEntity<BuildResponse>(response);	
+			HttpHeaders header = new HttpHeaders();
+			header.add("tokenId", camundaCorsFilter.getTokenId());
+			HttpEntity<BuildResponse> request = new HttpEntity<BuildResponse>(response,header);	
 			ResponseEntity<Void> httpresposne	=restTemplate
 					.exchange(camundaCorsFilter.getBuildresponseurl(), HttpMethod.POST, request, Void.class);
 		
 			logger.debug("Build response HttpResponseStatus :"+httpresposne.getStatusCodeValue());
 		}catch (Exception e ) {
-			logger.error("problem while sending  deploy response :"+e.getMessage());
+			logger.error("problem while sending response :"+e.getMessage());
 			
-			throw new TaskExecutorException("problem while sending  deploy response :"+e.getMessage());
+			throw new TaskExecutorException("problem while sending response :"+e.getMessage());
 			
 		}
 	}
 	
- }
+}

@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.akraino.bpm.model.BuildResponse;
 import com.akraino.bpm.service.DeployResponseSenderService;
 import com.akraino.bpm.service.ScriptExecutionService;
 
@@ -41,7 +40,7 @@ public class DeployScriptExecutorTaskDelegate implements JavaDelegate {
 	DeployResponseSenderService deployResponseSenderService;
 	
 	public void execute(DelegateExecution ctx) throws Exception {
-			deployResponseSenderService.sendResponse(new BuildResponse("completed", "inprogress", "not started", "not started","not started","Boston"));
+			
 			String  filepath=(String)ctx.getVariable("filepath");
 			logger.debug("task execution started  :"+filepath);
 			scriptExecutionService.executeScript(filepath);

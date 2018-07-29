@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0ryxuei" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.14.0">
+  <bpmn:process id="singlestepdeploy" name="singlestepdeploy" isExecutable="true" camunda:versionTag="1">
+    <bpmn:sequenceFlow id="SequenceFlow_125l5l0" sourceRef="StartEvent_1" targetRef="Task_19usii1" />
+    <bpmn:startEvent id="StartEvent_1" name="ScriptExecutionStartingPoint">
+      <bpmn:outgoing>SequenceFlow_125l5l0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="Task_19usii1" name="ScriptExecutorTask" camunda:delegateExpression="#{bashScriptExecutorTaskDelegate}">
+      <bpmn:incoming>SequenceFlow_125l5l0</bpmn:incoming>
+    </bpmn:serviceTask>
+    <bpmn:textAnnotation id="TextAnnotation_1p71e63">
+      <bpmn:text>Rest</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0bjstyh" sourceRef="StartEvent_1" targetRef="TextAnnotation_1p71e63" />
+    <bpmn:textAnnotation id="TextAnnotation_00kckqx">
+      <bpmn:text>Script execution Task</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_16sojmg" sourceRef="Task_19usii1" targetRef="TextAnnotation_00kckqx" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="singlestepdeploy">
+      <bpmndi:BPMNEdge id="SequenceFlow_125l5l0_di" bpmnElement="SequenceFlow_125l5l0">
+        <di:waypoint x="407" y="286" />
+        <di:waypoint x="457" y="286" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="387" y="265" width="90" height="12" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1p71e63_di" bpmnElement="TextAnnotation_1p71e63">
+        <dc:Bounds x="339" y="182" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0bjstyh_di" bpmnElement="Association_0bjstyh">
+        <di:waypoint x="389" y="268" />
+        <di:waypoint x="389" y="212" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_00kckqx_di" bpmnElement="TextAnnotation_00kckqx">
+        <dc:Bounds x="557" y="166" width="100" height="42" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_16sojmg_di" bpmnElement="Association_16sojmg">
+        <di:waypoint x="547" y="246" />
+        <di:waypoint x="586" y="208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="371" y="268" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="346" y="304" width="90" height="24" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0y4nqij_di" bpmnElement="Task_19usii1">
+        <dc:Bounds x="457" y="246" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
