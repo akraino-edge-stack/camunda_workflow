@@ -5,7 +5,8 @@ camunda.bpm:
     firstName: administrator
   filter:
     create: All tasks
-  buildresponseurl: http://135.16.101.85:8069/AECPortalMgmt/edgeSites/status
+  buildresponseurl: http://192.168.2.44:8080/AECPortalMgmt/edgeSites/status
+  tokenId: YWthZG1pbg==:9FCBA840BD274292F4DCC995BECE3D09
 logging:
   file: /var/log/scriptexecutor.log
   level:
