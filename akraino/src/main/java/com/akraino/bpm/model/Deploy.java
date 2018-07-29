@@ -18,6 +18,7 @@ package com.akraino.bpm.model;
 
 public class Deploy {
 	
+	private String sitename;
 	private String filepath;
 	private String fileparams;
 	private String winscpfilepath;
@@ -36,6 +37,15 @@ public class Deploy {
 	String postverificationscript;
 	String postverificationScriptparams;
 	
+	
+	
+
+	public String getSitename() {
+		return sitename;
+	}
+	public void setSitename(String sitename) {
+		this.sitename = sitename;
+	}
 	public String getFilepath() {
 		return filepath;
 	}
@@ -148,15 +158,21 @@ public class Deploy {
 	public void setPostverificationScriptparams(String postverificationScriptparams) {
 		this.postverificationScriptparams = postverificationScriptparams;
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "Deploy [filepath=" + filepath + ", fileparams=" + fileparams + ", winscpfilepath=" + winscpfilepath
-				+ ", winscpfileparams=" + winscpfileparams + ", remotserver=" + remotserver + ", port=" + port
-				+ ", username=" + username + ", password=" + password + ", destdir=" + destdir + ", remotefilename="
-				+ remotefilename + ", remotefileparams=" + remotefileparams + ", deploymentverifier="
-				+ deploymentverifier + ", deploymentverifierfileparams=" + deploymentverifierfileparams
-				+ ", noofiterations=" + noofiterations + ", waittime=" + waittime + ", postverificationscript="
-				+ postverificationscript + ", postverificationScriptparams=" + postverificationScriptparams + "]";
+		return "Deploy [sitename=" + sitename + ", filepath=" + filepath + ", fileparams=" + fileparams
+				+ ", winscpfilepath=" + winscpfilepath + ", winscpfileparams=" + winscpfileparams + ", remotserver="
+				+ remotserver + ", port=" + port + ", username=" + username + ", password=" + password + ", destdir="
+				+ destdir + ", remotefilename=" + remotefilename + ", remotefileparams=" + remotefileparams
+				+ ", deploymentverifier=" + deploymentverifier + ", deploymentverifierfileparams="
+				+ deploymentverifierfileparams + ", noofiterations=" + noofiterations + ", waittime=" + waittime
+				+ ", postverificationscript=" + postverificationscript + ", postverificationScriptparams="
+				+ postverificationScriptparams + "]";
 	}
+	
+	
+	
 	
  }

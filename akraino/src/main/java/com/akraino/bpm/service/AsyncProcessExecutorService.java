@@ -16,10 +16,24 @@
 
 package com.akraino.bpm.service;
 
-public interface FileTransferService {
-	
-	public void transferFile(String srcdir,String destdir,String filename,String servername,String username,String password,int port);
-	public void transferFile(String srcdir,String destdir,String servername,String username,String password,int port);
-	
+import com.akraino.bpm.model.Airship;
+import com.akraino.bpm.model.Apache;
+import com.akraino.bpm.model.Build;
+import com.akraino.bpm.model.Deploy;
+import com.akraino.bpm.model.Onap;
+import com.akraino.bpm.model.Tempest;
 
+public interface AsyncProcessExecutorService {
+	
+	public void executeAirshipProcess(Airship airship);
+	
+	public void executeBuildProcess(Build build);
+	
+	public void executeDeployProcess(Deploy deploy);
+	
+	public void executeOnapProcess(Onap onap);
+	
+	public void executeTempestProcess(Tempest tempest);
+	
+	public void executeApacheProcess(Apache apache);
 }
