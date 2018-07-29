@@ -56,8 +56,9 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
 			String  srcdir=(String)ctx.getVariable("srcdir");
 			String  destdir=(String)ctx.getVariable("destdir");
 			String  filepparams=(String)ctx.getVariable("verifierfileparams");
+			String sitename=(String)ctx.getVariable("sitename");
 			
-			deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started", "Boston"));
+			deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started", sitename,null,null,null));
 			
 			logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} , waittime : {},No of iterations :{}",
 					remotserver,portnumner,username,password,verifierFilename,srcdir,destdir,waittime,iterations);

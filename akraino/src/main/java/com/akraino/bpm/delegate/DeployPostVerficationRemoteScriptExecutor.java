@@ -51,8 +51,9 @@ public class DeployPostVerficationRemoteScriptExecutor implements JavaDelegate {
 		String fileparams=(String)ctx.getVariable("postverificationScriptparams");
 		String  srcdir=(String)ctx.getVariable("srcdir");
 		String destdir=(String)ctx.getVariable("destdir");
+		String sitename=(String)ctx.getVariable("sitename");
 		
-		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","inprogress","Boston"));
+		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","inprogress",sitename,null,null,null));
 		logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} ,fileparams={},src dir={},dest dir={}",
 				remotserver,portnumner,username,password,filename,fileparams,srcdir,destdir);
 		
@@ -60,7 +61,7 @@ public class DeployPostVerficationRemoteScriptExecutor implements JavaDelegate {
 		logger.debug("Execution command {}",command);
 		remoteScriptExecutionService.executeRemoteScript(remotserver,username,password,portnumner,filename,fileparams,srcdir,destdir,command);
 		
-		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","completed","Boston"));
+	
 	}
 
 }
