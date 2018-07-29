@@ -52,11 +52,13 @@ public class RemoteScriptExecutionServiceImpl implements RemoteScriptExecutionSe
 			session.setConfig("StrictHostKeyChecking", "no");
 			session.setPassword(password);
 			session.connect();
+			session.setTimeout(36000000);
 			channelExec = (ChannelExec)session.openChannel("exec");
 			InputStream in = channelExec.getInputStream();
 			channelExec.setCommand(command);
 			channelExec.setPty(true);
-			channelExec.connect();
+			
+			channelExec.connect(36000000);
 			reader = new BufferedReader(new InputStreamReader(in));
 			String line;
 			logger.debug("Script output......................");

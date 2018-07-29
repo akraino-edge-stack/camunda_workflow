@@ -37,6 +37,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
@@ -52,6 +53,9 @@ import org.springframework.web.filter.CorsFilter;
 	
 	@Value("${camunda.bpm.buildresponseurl}")	
 	private String buildresponseurl;
+	
+	@Value("${camunda.bpm.tokenId}")	
+	private String tokenId;
 	
 	@Autowired 
 	private DataSource dataSource;
@@ -70,11 +74,22 @@ import org.springframework.web.filter.CorsFilter;
 			this.buildresponseurl = buildresponseurl;
 		}
 	 	
-	 	@Bean
+	 	public String getTokenId() {
+			return tokenId;
+		}
+
+		public void setTokenId(String tokenId) {
+			this.tokenId = tokenId;
+		}
+
+		@Bean
 	 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 	 	   // Do any additional configuration here
 	 	   return builder.build();
 	 	}
+	 	
+	 	
+	 	
 	 	
 	 	/*@Bean
 	 	public  JobExecutor jobExecutor() {
@@ -114,6 +129,7 @@ import org.springframework.web.filter.CorsFilter;
 	 	    config.setDefaultSerializationFormat("application/json");
 	 	    PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 	 	    config.setDeploymentResources(resolver.getResources("classpath:*.bpmn"));
+	 	    //config.setProcessEnginePlugins();
 	 	    return config;
 	 	}
 	 
@@ -141,7 +157,16 @@ import org.springframework.web.filter.CorsFilter;
 	        return new CorsFilter(source);
 	    }
 	 	
-	 	
+	 	@Bean(name="akrainoprocessExecutor")
+	    public TaskExecutor workExecutor() {
+	        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+	        threadPoolTaskExecutor.setThreadNamePrefix("Async-");
+	        threadPoolTaskExecutor.setCorePoolSize(10);
+	        threadPoolTaskExecutor.setMaxPoolSize(50);
+	        threadPoolTaskExecutor.setQueueCapacity(600);
+	        threadPoolTaskExecutor.afterPropertiesSet();
+	        return threadPoolTaskExecutor;
+	    }	
 	}
 
 
