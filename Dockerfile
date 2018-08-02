@@ -13,7 +13,8 @@
 # limitations under the License.
 
 FROM java:8
-COPY  config .
+RUN mkdir -p /config
+COPY  config /config/
 COPY camunda_workflow-*.jar .
 EXPOSE 8015
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS  -jar  camunda_workflow-*.jar --server.port=8015" ]
