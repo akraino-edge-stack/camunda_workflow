@@ -131,5 +131,16 @@ public class BuildResponse {
 		this.tempestStatus = tempestStatus;
 	}
 
+
+	@Override
+	public String toString() {
+		return "BuildResponse [siteName=" + siteName + ", buildStatus=" + buildStatus + ", createTarStatus="
+				+ createTarStatus + ", genesisNodeStatus=" + genesisNodeStatus + ", deployToolsStatus="
+				+ deployToolsStatus + ", deployStatus=" + deployStatus + ", onapStatus=" + onapStatus + ", vCDNStatus="
+				+ vCDNStatus + ", tempestStatus=" + tempestStatus + "]";
+	}
+
+
+		
 	
 }

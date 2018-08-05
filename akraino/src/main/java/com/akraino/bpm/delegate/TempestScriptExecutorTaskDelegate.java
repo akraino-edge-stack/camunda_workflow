@@ -39,9 +39,11 @@ public class TempestScriptExecutorTaskDelegate implements JavaDelegate {
 	ScriptExecutionService scriptExecutionService;
 	
 	public void execute(DelegateExecution ctx) throws Exception {
-		String  filepath=(String)ctx.getVariable("filepath");
-		logger.debug("task execution started  :"+filepath);
-		scriptExecutionService.executeScript(filepath);
+		String  filename=(String)ctx.getVariable("ScpScriptFilepath");
+		String dir=(String)ctx.getVariable("scpsrcdir");
+		
+		logger.debug("task execution started  filename:{},srcdir:{} :",filename,dir);
+		scriptExecutionService.executeCDScript(dir,filename);
 	}
 
 }

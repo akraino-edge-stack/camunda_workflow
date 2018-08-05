@@ -14,29 +14,14 @@
  * limitations under the License.
  */
 
-package com.akraino.bpm.model;
+package com.akraino.bpm;
 
-public class WorkflowResponse {
-	int status;
-	String message;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@RunWith(SpringRunner.class)
+public class AkrainoSpringBootApplicationIT {
 	
 	
-	public WorkflowResponse(int status, String message) {
-		super();
-		this.status = status;
-		this.message = message;
-	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
+
 }

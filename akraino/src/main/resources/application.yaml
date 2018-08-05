@@ -5,7 +5,7 @@ camunda.bpm:
     firstName: administrator
   filter:
     create: All tasks
-  buildresponseurl: http://localhost:8069/AECPortalMgmt/install/status/
+  buildresponseurl: http://localhost:8080/status/
   tokenId: YWthZG1pbg==:9FCBA840BD274292F4DCC995BECE3D09
 logging:
   file: C:/tmp/scriptexecutor.log

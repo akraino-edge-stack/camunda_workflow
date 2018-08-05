@@ -40,9 +40,10 @@ public class ApacheScriptExecutorTaskDelegate implements JavaDelegate {
 	ScriptExecutionService scriptExecutionService;
 	
 	public void execute(DelegateExecution ctx) throws Exception {
-		String  filepath=(String)ctx.getVariable("filepath");
-		logger.debug("task execution started  :"+filepath);
-		scriptExecutionService.executeScript(filepath);
+		String  filename=(String)ctx.getVariable("scpfilename");
+		String scpdir=(String)ctx.getVariable("scpdir");
+		logger.debug("task execution started  filename:{}, directory:{}",filename,scpdir);
+		scriptExecutionService.executeCDScript(scpdir, filename);
 	}
 
 }

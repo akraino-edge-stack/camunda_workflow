@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0ryxuei" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.14.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0ryxuei" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.16.0">
   <bpmn:process id="onap" name="onap" isExecutable="true" camunda:versionTag="1">
     <bpmn:startEvent id="StartEvent_1" name="ScriptExecutionStartingPoint">
       <bpmn:outgoing>SequenceFlow_05ci0iu</bpmn:outgoing>
@@ -14,7 +14,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_1ssw8fq" sourceRef="Task_19usii1" targetRef="Task_0ss7pht" />
     <bpmn:sequenceFlow id="SequenceFlow_0envlli" sourceRef="Task_1ahdja4" targetRef="Task_19usii1" />
     <bpmn:sequenceFlow id="SequenceFlow_05ci0iu" sourceRef="StartEvent_1" targetRef="Task_1ahdja4" />
-    <bpmn:serviceTask id="Task_1ahdja4" name="ScriptExecutorTask" camunda:delegateExpression="#{scriptExecutorTaskDelegate}">
+    <bpmn:serviceTask id="Task_1ahdja4" name="ScriptExecutorTask" camunda:delegateExpression="#{winScpScriptDelegate}">
       <bpmn:incoming>SequenceFlow_05ci0iu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0envlli</bpmn:outgoing>
     </bpmn:serviceTask>
@@ -31,7 +31,7 @@
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0h3xbpb" sourceRef="Task_0ss7pht" targetRef="TextAnnotation_0zgafn7" />
     <bpmn:textAnnotation id="TextAnnotation_04jvs8x">
-      <bpmn:text>File transfer script </bpmn:text>
+      <bpmn:text>File transfer script</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0liuxn1" sourceRef="Task_1ahdja4" targetRef="TextAnnotation_04jvs8x" />
   </bpmn:process>

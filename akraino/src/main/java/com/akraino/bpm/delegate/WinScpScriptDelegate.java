@@ -44,9 +44,11 @@ public class WinScpScriptDelegate implements JavaDelegate {
 		
 		String sitename=(String)ctx.getVariable("sitename");
 		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "inprogress", "not started","not started",sitename,null,null,null));
-		String filepath=(String)ctx.getVariable("ScpScriptFilepath");
-			logger.debug("Win SCP task execution started  :"+filepath);
-			scriptExecutionService.executeScript(filepath);
+		String filename=(String)ctx.getVariable("ScpScriptFilepath");
+		String dir=(String)ctx.getVariable("scpsrcdir");
+		logger.debug("Win SCP task execution started filename:{},directory:{}",filename,dir);
+		
+		scriptExecutionService.executeCDScript(dir, filename);
 		
 		
 	}
