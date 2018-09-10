@@ -85,6 +85,36 @@ public class ScriptExecutionServiceImpl implements ScriptExecutionService{
 	}
 		
 		
+		public void executeCDBashScript(String dir,String cmd)  {
+			
+			try {
+				logger.debug("Executing the script.............dir:{},command:{}",dir,cmd);
+				
+				String[] command = { "/bin/bash", "-c", "bash  "+cmd };
+				Process p = Runtime.getRuntime().exec(command, null, new File(dir));
+				p.waitFor();
+				BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+	            String line = "";
+	            while ((line = input.readLine()) != null) {
+	            	logger.debug(line);
+	            }
+	            logger.debug("Script exit code :"+p.exitValue());
+	            if(p.exitValue()!=0) {
+	            	throw new TaskExecutorException("problem while executing the script . exist code :"+p.exitValue());
+	            }
+	            
+				
+			} catch (IOException e) {
+				throw new TaskExecutorException(cmd + " not found.");
+			} catch (InterruptedException e) {
+				throw new TaskExecutorException("problem while executing the script "+cmd);
+			}
+		
+	}
+		
+		
+		
+		
 		/*public void executeAirshipScript(String cmd)  {
 			
 			try {
