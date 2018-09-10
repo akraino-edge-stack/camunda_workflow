@@ -1,0 +1,57 @@
+/*
+ * Copyright (c) 2018 AT&T Intellectual Property. All rights reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.akraino.bpm.delegate;
+
+import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+
+import com.akraino.bpm.service.ScriptExecutionService;
+
+
+@Component
+public class MultiNodeScript1ExecutorTaskDelegate implements JavaDelegate {
+
+	@Autowired
+	RuntimeService runtimeService;
+	
+	 private static Logger logger = LoggerFactory.getLogger(MultiNodeScript1ExecutorTaskDelegate.class);
+	
+	@Autowired
+	ScriptExecutionService scriptExecutionService;
+	
+	public void execute(DelegateExecution ctx) throws Exception {
+		String  filename=(String)ctx.getVariable("file1");
+		String  fileparams=(String)ctx.getVariable("file1params");
+		
+		int lastindex=filename.lastIndexOf("/");
+		String srcdir=filename.substring(0,lastindex);
+		String task=filename.substring(lastindex+1,filename.length());
+		
+		String file= task+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
+		
+		
+		logger.debug("task execution started  filename:{}, directory:{}",file,srcdir);
+		scriptExecutionService.executeCDBashScript(srcdir, file);
+	}
+
+}

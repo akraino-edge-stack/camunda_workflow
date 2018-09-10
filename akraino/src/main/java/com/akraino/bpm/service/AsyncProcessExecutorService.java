@@ -20,6 +20,7 @@ import com.akraino.bpm.model.Airship;
 import com.akraino.bpm.model.Apache;
 import com.akraino.bpm.model.Build;
 import com.akraino.bpm.model.Deploy;
+import com.akraino.bpm.model.MultiNodeDeploy;
 import com.akraino.bpm.model.Onap;
 import com.akraino.bpm.model.Tempest;
 
@@ -36,4 +37,6 @@ public interface AsyncProcessExecutorService {
 	public void executeTempestProcess(Tempest tempest);
 	
 	public void executeApacheProcess(Apache apache);
+	
+	public void executeMultiNodeDeployProcess(MultiNodeDeploy multiNodeDeploy);
 }
