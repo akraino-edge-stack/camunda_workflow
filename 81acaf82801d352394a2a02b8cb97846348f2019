@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac962c1_b4d84cb9",
+        "filename": "akraino/.classpath",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-10T20:03:40Z",
+      "side": 1,
+      "message": "This file should be removed -- it is an Eclipse file, and is not part of what you are building",
+      "revId": "81acaf82801d352394a2a02b8cb97846348f2019",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bbb8764_0e32b5b3",
+        "filename": "akraino/src/main/java/com/akraino/bpm/controller/CamundaRestController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-10T20:03:40Z",
+      "side": 1,
+      "message": "sometimes you have \"in progress\" and here you have \"inprogress\"\nThese status string should be made constants so you use the same value everywhere",
+      "revId": "81acaf82801d352394a2a02b8cb97846348f2019",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bfbca613_8127e109",
+        "filename": "akraino/src/main/java/com/akraino/bpm/service/impl/AsyncProcessExecutorServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-10T20:03:40Z",
+      "side": 1,
+      "message": "spelling - success",
+      "revId": "81acaf82801d352394a2a02b8cb97846348f2019",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccaab531_656872dd",
+        "filename": "akraino/src/main/java/com/akraino/bpm/service/impl/AsyncProcessExecutorServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-10T20:03:40Z",
+      "side": 1,
+      "message": "spelling - success",
+      "revId": "81acaf82801d352394a2a02b8cb97846348f2019",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97c9151c_5941eb62",
+        "filename": "akraino/src/main/java/com/akraino/bpm/service/impl/ScriptExecutionServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 45
+      },
+      "writtenOn": "2018-09-10T20:03:40Z",
+      "side": 1,
+      "message": "I think you mean \"exit code\"",
+      "revId": "81acaf82801d352394a2a02b8cb97846348f2019",
+      "serverId": "4cada01b-0314-4fe0-84a1-f9ddc89863f9",
+      "unresolved": false
+    }
+  ]
+}
