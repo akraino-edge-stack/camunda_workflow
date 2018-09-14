@@ -31,6 +31,7 @@ import com.akraino.bpm.model.Apache;
 import com.akraino.bpm.model.Build;
 import com.akraino.bpm.model.BuildResponse;
 import com.akraino.bpm.model.Deploy;
+import com.akraino.bpm.model.MultiNodeDeploy;
 import com.akraino.bpm.model.Onap;
 import com.akraino.bpm.model.Tempest;
 import com.akraino.bpm.service.AsyncProcessExecutorService;
@@ -57,7 +58,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"exception: "+ex.getMessage(),airship.getSitename(),null,null,null));
 			  return;
 		}
-		 logger.debug("Airship execution sucess ");
+		 logger.debug("Airship execution success ");
 		 deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"success",airship.getSitename(),null,null,null));
 		
 		
@@ -87,7 +88,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse("exception: "+ex.getMessage(),null,null,null,null,build.getSitename(),null,null,null));
 			  return;
 		}
-		 logger.debug("Build execution sucess ");
+		 logger.debug("Build execution success ");
 		 deployResponseSenderService.sendResponse(new BuildResponse("success",null,null,null,null,build.getSitename(),null,null,null));
 	}
 
@@ -109,7 +110,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"exception: "+ex.getMessage(),deploy.getSitename(),null,null,null));
 			  return;
 		}
-		 logger.debug("deploy execution sucess ");
+		 logger.debug("deploy execution success ");
 		 deployResponseSenderService.sendResponse(new BuildResponse("success","success","success","success","success",deploy.getSitename(),null,null,null));
 	}
 	
@@ -150,7 +151,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,onap.getSitename(),"exception: "+ex.getMessage(),null,null));
 			  return;
 		}
-		 logger.debug("Onap execution sucess ");
+		 logger.debug("Onap execution success ");
 		 deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,onap.getSitename(),"succes",null,null));
 		
 		
@@ -187,7 +188,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,tempest.getSitename(),null,null,"exception: "+ex.getMessage()));
 			  return;
 		}
-		 logger.debug("Tempest execution sucess ");
+		 logger.debug("Tempest execution success ");
 		 deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,tempest.getSitename(),null,null,"success"));
 		
 	}
@@ -221,12 +222,11 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 				  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,apache.getSitename(),null,"exception: "+ex.getMessage(),null));
 				  return;
 			}
-			 logger.debug("Apache execution sucess ");
+			 logger.debug("Apache execution success ");
 			 deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,apache.getSitename(),null,"success",null));
 			
 			
 		}
-		
 		
 		private ProcessInstance executeApacheService(Apache apache) {
 			
@@ -249,5 +249,41 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			
 		}
 		
-		
-	}
+		@Async
+		public void executeMultiNodeDeployProcess(MultiNodeDeploy multiNodeDeploy) {
+			try {
+				executeMultiNodeDeployService(multiNodeDeploy);
+				}catch(TaskExecutorException ex) {
+					  logger.error("MultiNodeDeploy execution failed ",ex);
+					  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"exception: "+ex.getMessage(),multiNodeDeploy.getSitename(),null,null,null));
+					  return;
+			}
+			logger.debug("MultiNodeDeploy execution success ");
+			deployResponseSenderService.sendResponse(new BuildResponse("success","success","success","success","success",multiNodeDeploy.getSitename(),null,null,null));
+				
+		}
+
+		private ProcessInstance executeMultiNodeDeployService(MultiNodeDeploy multiNodeDeploy) {
+			
+			int lastindex=multiNodeDeploy.getWinscpfilepath().lastIndexOf("/");
+			String scpSrcDir=multiNodeDeploy.getWinscpfilepath().substring(0,lastindex);
+			String scpfilename=multiNodeDeploy.getWinscpfilepath().substring(lastindex+1,multiNodeDeploy.getWinscpfilepath().length());
+			
+			String transferfile= scpfilename+"  "+(multiNodeDeploy.getWinscpfileparams()!=null?multiNodeDeploy.getWinscpfileparams().replaceAll(",", "  "):" ");
+			
+			return camunda.getRuntimeService().startProcessInstanceByKey("multinodedeploy",
+					Variables.putValue("file1", multiNodeDeploy.getFile1()).putValue("file1params", multiNodeDeploy.getFile1params())
+					.putValue("winscpdir", scpSrcDir)
+					.putValue("scpfilename", transferfile)
+					.putValue("remotserver", multiNodeDeploy.getRemotserver())
+					.putValue("username", multiNodeDeploy.getUsername())
+					.putValue("password", multiNodeDeploy.getPassword())
+					.putValue("port", multiNodeDeploy.getPort())
+					.putValue("destdir1",multiNodeDeploy.getDestdir1()).putValue("destdir2", multiNodeDeploy.getDestdir2())
+					.putValue("remotefile1", multiNodeDeploy.getRemotefile1()).putValue("remotefile1params", multiNodeDeploy.getRemotefile1params())
+					.putValue("sitename", multiNodeDeploy.getSitename()).putValue("remotefile2", multiNodeDeploy.getRemotefile2()).putValue("remotefile2params", multiNodeDeploy.getRemotefile2params())
+					);
+				
+		}
+
+}

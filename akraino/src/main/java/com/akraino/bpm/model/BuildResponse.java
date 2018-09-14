@@ -28,6 +28,7 @@ public class BuildResponse {
 	private String vCDNStatus;
 	private String tempestStatus;
 	
+	
 	public BuildResponse(String buildStatus, String createTarStatus, String genesisNodeStatus, String deployToolsStatus,String deployStatus,
 			String siteName,String onapStatus,String vCDNStatus,String tempestStatus) {
 		super();
@@ -41,8 +42,7 @@ public class BuildResponse {
 		this.vCDNStatus=vCDNStatus;
 		this.tempestStatus=tempestStatus;
 	}
-
-
+	
 	public String getBuildStatus() {
 		return buildStatus;
 	}
@@ -131,7 +131,6 @@ public class BuildResponse {
 		this.tempestStatus = tempestStatus;
 	}
 
-
 	@Override
 	public String toString() {
 		return "BuildResponse [siteName=" + siteName + ", buildStatus=" + buildStatus + ", createTarStatus="
@@ -140,7 +139,9 @@ public class BuildResponse {
 				+ vCDNStatus + ", tempestStatus=" + tempestStatus + "]";
 	}
 
+	
 
+	
 		
 	
 }
