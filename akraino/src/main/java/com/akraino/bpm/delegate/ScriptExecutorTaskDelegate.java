@@ -40,8 +40,18 @@ public class ScriptExecutorTaskDelegate implements JavaDelegate {
 	
 	public void execute(DelegateExecution ctx) throws Exception {
 		String  filepath=(String)ctx.getVariable("filepath");
-		logger.debug("task execution started  :"+filepath);
-		scriptExecutionService.executeScript(filepath);
+		String fileparams=(String)ctx.getVariable("fileparams");
+		logger.debug("task execution started {} :",filepath);
+		
+		
+		int lastindex=filepath.lastIndexOf("/");
+		String srcdir=filepath.substring(0,lastindex);
+		String filename=filepath.substring(lastindex+1,filepath.length());
+		String task= filename+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
+		
+		logger.debug("task execution started  command: {} , src dir  :{}",task,srcdir);
+		
+		scriptExecutionService.executeCDBashScript(srcdir,task);
 	}
 
 }

@@ -46,7 +46,7 @@ public class ScriptExecutionServiceImpl implements ScriptExecutionService{
             p.waitFor();
             logger.debug("Script exit code :"+p.exitValue());
             if(p.exitValue()!=0) {
-            	throw new TaskExecutorException("problem while executing the script . exit code :"+p.exitValue());
+            	throw new TaskExecutorException("problem while executing the script . exist code :"+p.exitValue());
             }
             
 			

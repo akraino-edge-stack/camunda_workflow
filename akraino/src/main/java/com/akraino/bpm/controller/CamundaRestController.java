@@ -72,7 +72,7 @@ public class CamundaRestController {
 	  public ResponseEntity<BuildResponse> multiNodeDeploy(@RequestBody MultiNodeDeploy multiNodeDeploy) {
 		  logger.debug("Request received for multi node deploy {}  ",multiNodeDeploy.toString());
 		  asyncProcessExecutorService.executeMultiNodeDeployProcess(multiNodeDeploy);
-		  return new ResponseEntity<BuildResponse>(new BuildResponse(null,"in progress","not started","not started","not started",multiNodeDeploy.getSitename(),null,null,null),HttpStatus.OK);
+		  return new ResponseEntity<BuildResponse>(new BuildResponse(null,"inprogress","not started","not started","not started",multiNodeDeploy.getSitename(),null,null,null),HttpStatus.OK);
 	}
 	
 	

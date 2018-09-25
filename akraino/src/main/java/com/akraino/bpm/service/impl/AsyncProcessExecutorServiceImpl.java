@@ -58,7 +58,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"exception: "+ex.getMessage(),airship.getSitename(),null,null,null));
 			  return;
 		}
-		 logger.debug("Airship execution success ");
+		 logger.debug("Airship execution sucess ");
 		 deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"success",airship.getSitename(),null,null,null));
 		
 		
@@ -88,16 +88,15 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse("exception: "+ex.getMessage(),null,null,null,null,build.getSitename(),null,null,null));
 			  return;
 		}
-		 logger.debug("Build execution success ");
+		 logger.debug("Build execution sucess ");
 		 deployResponseSenderService.sendResponse(new BuildResponse("success",null,null,null,null,build.getSitename(),null,null,null));
 	}
 
 	
 	private ProcessInstance executeBuildService(Build build) {
 		
-		String filepath=build.getFilepath()+"  "+(build.getFileparams()!=null?build.getFileparams().replaceAll(",", "  "):" ");
 		return camunda.getRuntimeService().startProcessInstanceByKey("build",
-				Variables.putValue("filepath", filepath).putValue("targetfolder", build.getTargetfolder()));
+				Variables.putValue("filepath", build.getFilepath()).putValue("fileparams", build.getFileparams()).putValue("targetfolder", build.getTargetfolder()));
 	}
 	
 	@Async
@@ -110,7 +109,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"exception: "+ex.getMessage(),deploy.getSitename(),null,null,null));
 			  return;
 		}
-		 logger.debug("deploy execution success ");
+		 logger.debug("deploy execution sucess ");
 		 deployResponseSenderService.sendResponse(new BuildResponse("success","success","success","success","success",deploy.getSitename(),null,null,null));
 	}
 	
@@ -151,7 +150,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,onap.getSitename(),"exception: "+ex.getMessage(),null,null));
 			  return;
 		}
-		 logger.debug("Onap execution success ");
+		 logger.debug("Onap execution sucess ");
 		 deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,onap.getSitename(),"succes",null,null));
 		
 		
@@ -188,7 +187,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 			  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,tempest.getSitename(),null,null,"exception: "+ex.getMessage()));
 			  return;
 		}
-		 logger.debug("Tempest execution success ");
+		 logger.debug("Tempest execution sucess ");
 		 deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,tempest.getSitename(),null,null,"success"));
 		
 	}
@@ -222,7 +221,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 				  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,apache.getSitename(),null,"exception: "+ex.getMessage(),null));
 				  return;
 			}
-			 logger.debug("Apache execution success ");
+			 logger.debug("Apache execution sucess ");
 			 deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,apache.getSitename(),null,"success",null));
 			
 			
@@ -258,7 +257,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 					  deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"exception: "+ex.getMessage(),multiNodeDeploy.getSitename(),null,null,null));
 					  return;
 			}
-			logger.debug("MultiNodeDeploy execution success ");
+			logger.debug("MultiNodeDeploy execution sucess ");
 			deployResponseSenderService.sendResponse(new BuildResponse("success","success","success","success","success",multiNodeDeploy.getSitename(),null,null,null));
 				
 		}
