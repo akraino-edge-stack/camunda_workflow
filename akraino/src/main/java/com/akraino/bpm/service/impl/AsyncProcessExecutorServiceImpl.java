@@ -95,9 +95,8 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 	
 	private ProcessInstance executeBuildService(Build build) {
 		
-		String filepath=build.getFilepath()+"  "+(build.getFileparams()!=null?build.getFileparams().replaceAll(",", "  "):" ");
 		return camunda.getRuntimeService().startProcessInstanceByKey("build",
-				Variables.putValue("filepath", filepath).putValue("targetfolder", build.getTargetfolder()));
+				Variables.putValue("filepath", build.getFilepath()).putValue("fileparams", build.getFileparams()).putValue("targetfolder", build.getTargetfolder()));
 	}
 	
 	@Async
