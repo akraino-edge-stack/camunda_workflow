@@ -16,10 +16,7 @@
 
 package com.akraino.bpm.config;
 
-
 import java.io.IOException;
-
-
 import javax.sql.DataSource;
 
 import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
@@ -44,28 +41,25 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-
-
 @Configuration
+public class CamundaCorsFilter {
 
-	public class CamundaCorsFilter {
-	
-	
-	@Value("${camunda.bpm.buildresponseurl}")	
+
+	@Value("${camunda.bpm.buildresponseurl}")
 	private String buildresponseurl;
-	
-	@Value("${camunda.bpm.tokenId}")	
+
+	@Value("${camunda.bpm.tokenId}")
 	private String tokenId;
-	
-	@Autowired 
+
+	@Autowired
 	private DataSource dataSource;
-	
+
 	@Autowired
 	private PlatformTransactionManager  transactionManager;
-	
-	@Autowired 
+
+	@Autowired
 	private JobExecutor jobExecutor;
-	 	
+
 	 	public String getBuildresponseurl() {
 			return buildresponseurl;
 		}
@@ -73,7 +67,7 @@ import org.springframework.web.filter.CorsFilter;
 	 	public void setBuildresponseurl(String buildresponseurl) {
 			this.buildresponseurl = buildresponseurl;
 		}
-	 	
+
 	 	public String getTokenId() {
 			return tokenId;
 		}
@@ -87,26 +81,23 @@ import org.springframework.web.filter.CorsFilter;
 	 	   // Do any additional configuration here
 	 	   return builder.build();
 	 	}
-	 	
-	 	
-	 	
-	 	
+
 	 	/*@Bean
 	 	public  JobExecutor jobExecutor() {
 	 	    final JobExecutor jobExecutor = new RuntimeContainerJobExecutor();
 	 	    jobExecutor.setWaitTimeInMillis(5000);
 	 	    jobExecutor.setLockTimeInMillis(18000000);
 	 	    return jobExecutor;
-	 	  } 
-	 	@Bean 
-	 	
+	 	  }
+	 	@Bean
+
 	 	public ProcessEngineConfiguration SpringProcessEngineConfiguration () {
-	 		
+
 	 		ProcessEngineConfiguration ProcessEngineConfiguration=new SpringProcessEngineConfiguration().setJobExecutor(jobexecutor).setProcessEngineName("default");
 	 		return ProcessEngineConfiguration;
 	 	}*/
-	 	
-	 @Bean
+
+	    @Bean
 	 	@Primary
 	    public static JobExecutor jobExecutor(@Qualifier("camundaTaskExecutor") final TaskExecutor taskExecutor) {
 	      final SpringJobExecutor springJobExecutor = new SpringJobExecutor();
@@ -116,7 +107,7 @@ import org.springframework.web.filter.CorsFilter;
 	      springJobExecutor.setLockTimeInMillis(36000000);
 	 	  return springJobExecutor;
 	    }
-	 	
+
 	 	@Bean
 	 	@Primary
 	 	public ProcessEngineConfigurationImpl processEngineConfiguration() throws IOException {
@@ -132,14 +123,13 @@ import org.springframework.web.filter.CorsFilter;
 	 	    //config.setProcessEnginePlugins();
 	 	    return config;
 	 	}
-	 
+
 	 	@Bean
 	 	public PlatformTransactionManager getTransactionManager() {
 	 		PlatformTransactionManager ptm=new DataSourceTransactionManager(dataSource);
 	 		return ptm;
-	 	  } 
-	 	
-	 	
+	    }
+
 	 	@Bean
 	    public CorsFilter corsFilter() {
 	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -156,7 +146,7 @@ import org.springframework.web.filter.CorsFilter;
 	        source.registerCorsConfiguration("/**", config);
 	        return new CorsFilter(source);
 	    }
-	 	
+
 	 	@Bean(name="akrainoprocessExecutor")
 	    public TaskExecutor workExecutor() {
 	        ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
@@ -166,7 +156,5 @@ import org.springframework.web.filter.CorsFilter;
 	        threadPoolTaskExecutor.setQueueCapacity(600);
 	        threadPoolTaskExecutor.afterPropertiesSet();
 	        return threadPoolTaskExecutor;
-	    }	
-	}
-
-
+	    }
+}
