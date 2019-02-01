@@ -24,34 +24,34 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+
 import com.akraino.bpm.service.ScriptExecutionService;
 
 
 @Component
-public class ScriptExecutorTaskDelegate implements JavaDelegate {
+public class MultiNodeScript1ExecutorTaskDelegate implements JavaDelegate {
 
 	@Autowired
 	RuntimeService runtimeService;
 	
-	 private static Logger logger = LoggerFactory.getLogger(ScriptExecutorTaskDelegate.class);
+	 private static Logger logger = LoggerFactory.getLogger(MultiNodeScript1ExecutorTaskDelegate.class);
 	
 	@Autowired
 	ScriptExecutionService scriptExecutionService;
 	
 	public void execute(DelegateExecution ctx) throws Exception {
-		String  filepath=(String)ctx.getVariable("filepath");
-		String fileparams=(String)ctx.getVariable("fileparams");
-		logger.debug("task execution started {} :",filepath);
+		String  filename=(String)ctx.getVariable("file1");
+		String  fileparams=(String)ctx.getVariable("file1params");
+		
+		int lastindex=filename.lastIndexOf("/");
+		String srcdir=filename.substring(0,lastindex);
+		String task=filename.substring(lastindex+1,filename.length());
+		
+		String file= task+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
 		
 		
-		int lastindex=filepath.lastIndexOf("/");
-		String srcdir=filepath.substring(0,lastindex);
-		String filename=filepath.substring(lastindex+1,filepath.length());
-		String task= filename+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
-		
-		logger.debug("task execution started  command: {} , src dir  :{}",task,srcdir);
-		
-		scriptExecutionService.executeCDBashScript(srcdir,task);
+		logger.debug("task execution started  filename:{}, directory:{}",file,srcdir);
+		scriptExecutionService.executeCDBashScript(srcdir, file);
 	}
 
 }

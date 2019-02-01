@@ -16,7 +16,7 @@
 
 package com.akraino.bpm.delegate;
 
-import org.camunda.bpm.engine.RuntimeService;
+
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
@@ -24,34 +24,33 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.akraino.bpm.model.BuildResponse;
+import com.akraino.bpm.service.DeployResponseSenderService;
 import com.akraino.bpm.service.ScriptExecutionService;
 
 
 @Component
-public class ScriptExecutorTaskDelegate implements JavaDelegate {
+public class MultiNodeWinScpScriptDelegate implements JavaDelegate {
 
-	@Autowired
-	RuntimeService runtimeService;
+	private static Logger logger = LoggerFactory.getLogger(MultiNodeWinScpScriptDelegate.class);
 	
-	 private static Logger logger = LoggerFactory.getLogger(ScriptExecutorTaskDelegate.class);
+	@Autowired 
+	DeployResponseSenderService deployResponseSenderService;
 	
 	@Autowired
 	ScriptExecutionService scriptExecutionService;
 	
 	public void execute(DelegateExecution ctx) throws Exception {
-		String  filepath=(String)ctx.getVariable("filepath");
-		String fileparams=(String)ctx.getVariable("fileparams");
-		logger.debug("task execution started {} :",filepath);
+		
+		String sitename=(String)ctx.getVariable("sitename");
+		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "inprogress", "not started","not started",sitename,null,null,null));
+		String filename=(String)ctx.getVariable("scpfilename");
+		String dir=(String)ctx.getVariable("winscpdir");
+		logger.debug("Win SCP task execution started filename:{},directory:{}",filename,dir);
+		
+		scriptExecutionService.executeCDBashScript(dir, filename);
 		
 		
-		int lastindex=filepath.lastIndexOf("/");
-		String srcdir=filepath.substring(0,lastindex);
-		String filename=filepath.substring(lastindex+1,filepath.length());
-		String task= filename+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
-		
-		logger.debug("task execution started  command: {} , src dir  :{}",task,srcdir);
-		
-		scriptExecutionService.executeCDBashScript(srcdir,task);
 	}
 
 }

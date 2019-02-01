@@ -33,6 +33,7 @@ import com.akraino.bpm.model.BuildResponse;
 import com.akraino.bpm.model.Deploy;
 import com.akraino.bpm.model.Onap;
 import com.akraino.bpm.model.Tempest;
+import com.akraino.bpm.model.MultiNodeDeploy;
 import com.akraino.bpm.service.AsyncProcessExecutorService;
 
 import io.swagger.annotations.Api;
@@ -40,69 +41,58 @@ import io.swagger.annotations.Api;
 @Api
 @RestController
 public class CamundaRestController {
-	
-	  
-	  
-	  @Autowired 
-	  private AsyncProcessExecutorService asyncProcessExecutorService;
-	  
-	  private static Logger logger = LoggerFactory.getLogger(CamundaRestController.class);
-	  
-	  @PostMapping("/build/")
-	  public ResponseEntity<BuildResponse> build(@RequestBody Build build) {
-		  logger.debug("Request received for Build ",build.toString());
-		  asyncProcessExecutorService.executeBuildProcess(build);
-		  return new ResponseEntity<BuildResponse>(new BuildResponse("in progress",null,null,null,null,build.getSitename(),null,null,null),HttpStatus.OK);
-		  
+
+	@Autowired
+	private AsyncProcessExecutorService asyncProcessExecutorService;
+
+	private static Logger logger = LoggerFactory.getLogger(CamundaRestController.class);
+
+	@PostMapping("/build/")
+	public ResponseEntity<BuildResponse> build(@RequestBody Build build) {
+		logger.debug("Request received for Build {}",build.toString());
+		asyncProcessExecutorService.executeBuildProcess(build);
+		return new ResponseEntity<BuildResponse>(new BuildResponse("in progress",null,null,null,null,build.getSitename(),null,null,null),HttpStatus.OK);
 	}
 
-	  
-	
-	
 	@PostMapping("/deploy/")
-	  public ResponseEntity<BuildResponse> deploy(@RequestBody Deploy deploy) {
-		  logger.debug("Request received for executing {} and targetDirectory {} ",deploy.toString());
-		  asyncProcessExecutorService.executeDeployProcess(deploy);
-		  return new ResponseEntity<BuildResponse>(new BuildResponse(null,"in progress","not started","not started","not started",deploy.getSitename(),null,null,null),HttpStatus.OK);
+	public ResponseEntity<BuildResponse> deploy(@RequestBody Deploy deploy) {
+		logger.debug("Request received for deploy {}  ",deploy.toString());
+		asyncProcessExecutorService.executeDeployProcess(deploy);
+		return new ResponseEntity<BuildResponse>(new BuildResponse(null,"in progress","not started","not started","not started",deploy.getSitename(),null,null,null),HttpStatus.OK);
 	}
 
-	
-	
-	
+	@PostMapping("/multinodedeploy/")
+	public ResponseEntity<BuildResponse> multiNodeDeploy(@RequestBody MultiNodeDeploy multiNodeDeploy) {
+		logger.debug("Request received for multi node deploy {}  ",multiNodeDeploy.toString());
+		asyncProcessExecutorService.executeMultiNodeDeployProcess(multiNodeDeploy);
+		return new ResponseEntity<BuildResponse>(new BuildResponse(null,"in progress","not started","not started","not started",multiNodeDeploy.getSitename(),null,null,null),HttpStatus.OK);
+	}
+
 	@PostMapping("/airship/")
 	public ResponseEntity<BuildResponse> airship(@RequestBody Airship airship) {
-		  logger.debug("Request received for airship {} ",airship.toString());
-		  asyncProcessExecutorService.executeAirshipProcess(airship);
-		  return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,"in progress",airship.getSitename(),null,null,null),HttpStatus.OK);
-	  }
+		logger.debug("Request received for airship {} ",airship.toString());
+		asyncProcessExecutorService.executeAirshipProcess(airship);
+		return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,"in progress",airship.getSitename(),null,null,null),HttpStatus.OK);
+	}
 
-	
-	
-	  @PostMapping("/tempest/")
-	  public ResponseEntity<BuildResponse> tempest(@RequestBody Tempest tempest) {
-		  logger.debug("Request received for onap ",tempest.toString());
-		  asyncProcessExecutorService.executeTempestProcess(tempest);
-		  return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,null,tempest.getSitename(),null,null,"in progress"),HttpStatus.OK);
+	@PostMapping("/tempest/")
+	public ResponseEntity<BuildResponse> tempest(@RequestBody Tempest tempest) {
+		logger.debug("Request received for tempest {}",tempest.toString());
+		asyncProcessExecutorService.executeTempestProcess(tempest);
+		return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,null,tempest.getSitename(),null,null,"in progress"),HttpStatus.OK);
 	}
-	
-	
-	
-	
-	  @PostMapping("/apache/")
-	  public ResponseEntity<BuildResponse> apache(@RequestBody Apache apache) {
-		  logger.debug("Request received for onap ",apache.toString());
-		  asyncProcessExecutorService.executeApacheProcess(apache);
-		  return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,null,apache.getSitename(),null,"in progress",null),HttpStatus.OK);
+
+	@PostMapping("/apache/")
+	public ResponseEntity<BuildResponse> apache(@RequestBody Apache apache) {
+		logger.debug("Request received for apache{} ",apache.toString());
+		asyncProcessExecutorService.executeApacheProcess(apache);
+		return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,null,apache.getSitename(),null,"in progress",null),HttpStatus.OK);
 	}
-	
-	
-	
-	
- @PostMapping("/onap/")
-	  public ResponseEntity<BuildResponse> onap(@RequestBody Onap onap) {
-		  logger.debug("Request received for onap ",onap.toString());
-		  asyncProcessExecutorService.executeOnapProcess(onap);
-		  return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,null,onap.getSitename(),"in progress",null,null),HttpStatus.OK);
+
+	@PostMapping("/onap/")
+	public ResponseEntity<BuildResponse> onap(@RequestBody Onap onap) {
+		logger.debug("Request received for onap ",onap.toString());
+		asyncProcessExecutorService.executeOnapProcess(onap);
+		return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,null,onap.getSitename(),"in progress",null,null),HttpStatus.OK);
 	}
- 
 }
