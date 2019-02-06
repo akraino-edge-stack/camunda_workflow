@@ -136,6 +136,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
 				.putValue("port", deploy.getPort())
 				.putValue("destdir",deploy.getDestdir())
 				.putValue("remotefilename", deploy.getRemotefilename())
+				.putValue("filename", deploy.getRemotefilename())	// Needed by DeployRemoteScriptExecutorTaskDelegate.execute()
 				.putValue("fileparams", deploy.getFileparams())
 				.putValue("verifier", deploy.getDeploymentverifier())
 				.putValue("verifierfileparams",  deploy.getDeploymentverifierfileparams())

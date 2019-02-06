@@ -62,7 +62,7 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-tertifartifactId>
       <scope>test</scope>
-      <version>1.5.8.RE</ver</version>
+      <version>1.5.8.RE</version>
     </dependency>
 -->
   </dependencies>
