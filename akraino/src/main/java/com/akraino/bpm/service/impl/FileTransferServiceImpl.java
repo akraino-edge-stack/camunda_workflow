@@ -33,61 +33,57 @@ import com.jcraft.jsch.Session;
 
 @Service("fileTransferService")
 public class FileTransferServiceImpl implements FileTransferService {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(FileTransferServiceImpl.class);
 
 	public void transferFile(String srcdir, String destdir, String filename,String servername,String username,String password,int port) {
-		
-		 logger.debug("file transfor filename={},srcdir={},destdir={}",filename,srcdir,destdir);
-		 ChannelSftp sftpChannel=null;
-	        try {
-	        	JSch jsch = new JSch();
-				Session session = jsch.getSession(username, servername, port);
-				session.setConfig("StrictHostKeyChecking", "no");
-				session.setPassword(password);
-				session.connect();
-				sftpChannel = (ChannelSftp)session.openChannel("sftp");
-				sftpChannel.setPty(true);
-				sftpChannel.connect();
-				sftpChannel.cd(destdir);
-				sftpChannel.put(new FileInputStream(new File (srcdir+"/"+filename)), filename);
-				sftpChannel.chmod(Integer.parseInt("777", 8),filename);
-			} catch (Exception e) {
-	        	logger.error("Exception occured while ftp : "+e);
-	        	throw new TaskExecutorException("problem while transfering the file to remote machine :"+e.getMessage());
-	        } finally {
-	        	sftpChannel.disconnect();
-	        }
+
+		logger.debug("file transfor filename={},srcdir={},destdir={}",filename,srcdir,destdir);
+		ChannelSftp sftpChannel=null;
+		try {
+			JSch jsch = new JSch();
+			Session session = jsch.getSession(username, servername, port);
+			session.setConfig("StrictHostKeyChecking", "no");
+			session.setPassword(password);
+			session.connect();
+			sftpChannel = (ChannelSftp)session.openChannel("sftp");
+			sftpChannel.setPty(true);
+			sftpChannel.connect();
+			sftpChannel.cd(destdir);
+			sftpChannel.put(new FileInputStream(new File (srcdir+"/"+filename)), filename);
+			sftpChannel.chmod(Integer.parseInt("777", 8),filename);
+		} catch (Exception e) {
+			logger.error("Exception occurred while FTP : "+e);
+			throw new TaskExecutorException("problem while transferring the file to remote machine :"+e.getMessage());
+		} finally {
+			if (sftpChannel != null)
+				sftpChannel.disconnect();
+		}
 	}
-	
 
 	public void transferFile(String srcdir, String destdir,String servername,String username,String password,int port) {
-		
+
 		List<File> files=getAllfiles(new File(srcdir));
 		for(File file: files) {
 			transferFile(srcdir,destdir,file.getName(),servername,username,password,port);
 		}
-		
-		
 	}
-	
+
 	private List<File> getAllfiles(File rootDirectory){
 	    List<File> results = new ArrayList<File>();
-	    
+
 	    if(rootDirectory==null) {
-	    	throw new TaskExecutorException("problem while transfering the file to remote machine : src diectory Not found");
+	    	throw new TaskExecutorException("problem while transferring the file to remote machine : src directory Not found");
 	    }
-	    
-	    for(File currentItem : rootDirectory.listFiles()){
-	      if(currentItem.isDirectory()){
-	          results.addAll(getAllfiles(currentItem));
-	      }
-	      else{
-	          results.add(currentItem);
-	      }
-	    }
+
+		for(File currentItem : rootDirectory.listFiles()){
+			if(currentItem.isDirectory()){
+				results.addAll(getAllfiles(currentItem));
+			}
+			else{
+				results.add(currentItem);
+			}
+		}
 	    return results;
 	}
-	
-
 }

@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,6 +36,18 @@ public class RemoteScriptExecutionServiceImpl implements RemoteScriptExecutionSe
 
 	private static Logger logger = LoggerFactory.getLogger(RemoteScriptExecutionServiceImpl.class);
 	
+	/**
+	 * Execute a command remotely
+	 * @param remoteserver the remote server to execute on
+	 * @param username the user name on the remote server
+	 * @param password the password for the user
+	 * @param portnumber the port number on the remote server
+	 * @param filename not used
+	 * @param fileparams not used 
+	 * @param srcdir not used
+	 * @param destdir not used
+	 * @param command the command to execute
+	 */
 	public void executeRemoteScript(String remoteserver,String username,String password,int portnumber,String filename,
 			String fileparams,String srcdir,String destdir,String command)  {
 		
@@ -63,19 +74,19 @@ public class RemoteScriptExecutionServiceImpl implements RemoteScriptExecutionSe
 			String line;
 			logger.debug("Script output......................");
 			while ((line = reader.readLine()) != null){
-				 logger.debug(line);
+				logger.debug(line);
 			}
 			
 			channelExec.disconnect();
-	        while (!channelExec.isClosed()) {
-
-	        }
+			while (!channelExec.isClosed()) {
+				// nothing?!
+			}
 
 			int exitStatus = channelExec.getExitStatus();
 			
             logger.debug("Script exit code :"+exitStatus);
             if(exitStatus!=0) {
-            	throw new TaskExecutorException("problem while executing the script . exist code :"+exitStatus);
+            	throw new TaskExecutorException("problem while executing the script. exit code :"+exitStatus);
             }
             
 			
@@ -83,7 +94,7 @@ public class RemoteScriptExecutionServiceImpl implements RemoteScriptExecutionSe
 			throw new TaskExecutorException(filename + " not found.");
 		} catch (Exception e) {
 			throw new TaskExecutorException("Problem while executing script"+e.getMessage());
-		}finally{
+		} finally {
 			if(reader!=null) {
 				try {
 					reader.close();
@@ -94,15 +105,6 @@ public class RemoteScriptExecutionServiceImpl implements RemoteScriptExecutionSe
 			if(session!=null) {
 				session.disconnect();
 			}
-		}
-		
-		
-		
+		}	
 	}
-	
-	
-	
-
 }
-	 
-	 
