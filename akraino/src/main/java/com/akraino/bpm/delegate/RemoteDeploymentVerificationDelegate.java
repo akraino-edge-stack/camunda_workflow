@@ -38,7 +38,7 @@ public class RemoteDeploymentVerificationDelegate implements JavaDelegate {
 	RemoteDeploymentVerificationService remotedeploymentVerificationService;
 	
 
- public void execute(DelegateExecution ctx) throws Exception {
+	public void execute(DelegateExecution ctx) throws Exception {
 		
 		try {
 			String  verifierFilename=(String)ctx.getVariable("verifier");
@@ -55,15 +55,12 @@ public class RemoteDeploymentVerificationDelegate implements JavaDelegate {
 			logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} , waittime : {},No of iterations :{}",
 					remotserver,portnumner,username,password,verifierFilename,srcdir,destdir,waittime,iterations);
 			
-			String command="sh  " +destdir+"/"+(verifierFilename!=null?verifierFilename:"  ")+"  "+(filepparams!=null?filepparams.replaceAll(",", "  "):" ");
+			// This looks wrong!
+			String command = "/bin/bash  " +destdir+"/"+(verifierFilename!=null?verifierFilename:"  ")+"  "+(filepparams!=null?filepparams.replaceAll(",", "  "):" ");
 			logger.debug("Execution command {}",command);
 			remotedeploymentVerificationService.executeScript(remotserver,username,password,portnumner,verifierFilename,filepparams,srcdir,destdir,waittime,iterations,command);
-		}catch(TaskExecutorException ex) {
+		} catch(TaskExecutorException ex) {
 			throw ex;
-		}
-		
-		
+		}	
 	}
-
 }
-

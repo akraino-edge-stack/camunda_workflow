@@ -27,14 +27,19 @@ import org.springframework.stereotype.Service;
 import com.akraino.bpm.Exception.TaskExecutorException;
 import com.akraino.bpm.service.DeploymentVerificationService;
 
-
 @Service("deploymentVerificationService")
 public class DeploymentverificationServiceImpl implements DeploymentVerificationService{
 
 	private static Logger logger = LoggerFactory.getLogger(DeploymentverificationServiceImpl.class);
-	
-	public void executeScript(String filepatch,int waitttime,int iterations)  {
-		
+
+	/**
+	 * Execute a script. potentially several times.
+	 * @param filepatch the file to execute
+	 * @param waitttime how long to wait (in seconds) between executions
+	 * @param iterations the maximum number of iterations
+	 */
+	public void executeScript(String filepatch, int waitttime, int iterations)  {
+
 		boolean issuccess=false;
 		for( int i=0;i<=iterations;i++) {
 			try {
@@ -43,32 +48,30 @@ public class DeploymentverificationServiceImpl implements DeploymentVerification
 				Process p = Runtime.getRuntime().exec(filepatch);
 				p.waitFor();
 				BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-		        String line = "";
-		        while ((line = input.readLine()) != null) {
-		            if(line.equals("0")) {
-		            	issuccess=true;
-		            }
-		         }
-		        
-		        logger.debug("Script exit code :"+p.exitValue());
-	            if(p.exitValue()!=0) {
-	            	throw new TaskExecutorException("problem while executing the script . exist code :"+p.exitValue());
-	            }
-		    } catch (IOException e) {
-					throw new TaskExecutorException(filepatch + " not found.");
+				String line = "";
+				while ((line = input.readLine()) != null) {
+					if (line.equals("0")) {
+						issuccess=true;
+					}
+				}
+
+				logger.debug("Script exit code :"+p.exitValue());
+				if(p.exitValue()!=0) {
+					throw new TaskExecutorException("problem while executing the script. exit code :"+p.exitValue());
+				}
+			} catch (IOException e) {
+				throw new TaskExecutorException(filepatch + " not found.");
 			} catch (InterruptedException e) {
-					throw new TaskExecutorException("problem while executing the script "+filepatch);
+				throw new TaskExecutorException("problem while executing the script "+filepatch);
 			}
 			if(issuccess) {
 				break;
 			}
-			
 		}
-		
-		 if(!issuccess) {
-         	logger.debug("verification script returned 1 ");
-         	throw new TaskExecutorException("1");
-         }
-	}
 
+		if(!issuccess) {
+			logger.debug("verification script returned 1 ");
+			throw new TaskExecutorException("1");
+		}
+	}
 }

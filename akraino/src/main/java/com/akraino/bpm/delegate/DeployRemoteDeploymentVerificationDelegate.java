@@ -16,7 +16,6 @@
 
 package com.akraino.bpm.delegate;
 
-
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.slf4j.Logger;
@@ -29,8 +28,6 @@ import com.akraino.bpm.model.BuildResponse;
 import com.akraino.bpm.service.DeployResponseSenderService;
 import com.akraino.bpm.service.RemoteDeploymentVerificationService;
 
-
-
 @Component
 public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate {
 
@@ -39,11 +36,10 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
 	@Autowired
 	RemoteDeploymentVerificationService remotedeploymentVerificationService;
 	
-	@Autowired 
+	@Autowired
 	DeployResponseSenderService deployResponseSenderService;
-	
 
- public void execute(DelegateExecution ctx) throws Exception {
+	public void execute(DelegateExecution ctx) throws Exception {
 		
 		try {
 			String  verifierFilename=(String)ctx.getVariable("verifier");
@@ -63,15 +59,11 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
 			logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} , waittime : {},No of iterations :{}",
 					remotserver,portnumner,username,password,verifierFilename,srcdir,destdir,waittime,iterations);
 			
-			String command="sh  " +destdir+"/"+verifierFilename+"  "+(filepparams!=null?filepparams.replaceAll(",", "  "):" ");
+			String command = String.format("/bin/bash %s/%s %s", destdir, verifierFilename, (filepparams!=null?filepparams.replaceAll(",", "  "):""));
 			logger.debug("Execution command {}",command);
 			remotedeploymentVerificationService.executeScript(remotserver,username,password,portnumner,verifierFilename,filepparams,srcdir,destdir,waittime,iterations,command);
-		}catch(TaskExecutorException ex) {
+		} catch(TaskExecutorException ex) {
 			throw ex;
-		}
-		
-		
+		}	
 	}
-
 }
-

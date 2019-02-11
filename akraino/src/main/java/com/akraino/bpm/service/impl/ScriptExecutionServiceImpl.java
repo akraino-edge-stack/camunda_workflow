@@ -32,9 +32,13 @@ import com.akraino.bpm.service.ScriptExecutionService;
 public class ScriptExecutionServiceImpl implements ScriptExecutionService{
 
 	private static Logger logger = LoggerFactory.getLogger(ScriptExecutionServiceImpl.class);
-	
+
+	/**
+	 * Execute a script
+	 * @param filepatch the script to execute
+	 */
 	public void executeScript(String filepatch)  {
-		
+
 		try {
 			logger.debug("Executing the script.............");
 			Process p = Runtime.getRuntime().exec(filepatch);
@@ -46,100 +50,98 @@ public class ScriptExecutionServiceImpl implements ScriptExecutionService{
             p.waitFor();
             logger.debug("Script exit code :"+p.exitValue());
             if(p.exitValue()!=0) {
-            	throw new TaskExecutorException("problem while executing the script . exit code :"+p.exitValue());
+            	throw new TaskExecutorException("problem while executing the script. exit code :"+p.exitValue());
             }
-            
-			
+
 		} catch (IOException e) {
 			throw new TaskExecutorException(filepatch + " not found.");
 		} catch (InterruptedException e) {
 			throw new TaskExecutorException("problem while executing the script "+filepatch);
 		}
-		
-	}
-		public void executeCDScript(String dir,String cmd)  {
-			
-			try {
-				logger.debug("Executing the script.............dir:{},command:{}",dir,cmd);
-				
-				String[] command = { "/bin/sh", "-c", "sh  "+cmd };
-				Process p = Runtime.getRuntime().exec(command, null, new File(dir));
-				p.waitFor();
-				BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-	            String line = "";
-	            while ((line = input.readLine()) != null) {
-	            	logger.debug(line);
-	            }
-	            logger.debug("Script exit code :"+p.exitValue());
-	            if(p.exitValue()!=0) {
-	            	throw new TaskExecutorException("problem while executing the script . exist code :"+p.exitValue());
-	            }
-	            
-				
-			} catch (IOException e) {
-				throw new TaskExecutorException(cmd + " not found.");
-			} catch (InterruptedException e) {
-				throw new TaskExecutorException("problem while executing the script "+cmd);
-			}
-		
-	}
-		
-		
-		public void executeCDBashScript(String dir,String cmd)  {
-			
-			try {
-				logger.debug("Executing the script.............dir:{},command:{}",dir,cmd);
-				
-				String[] command = { "/bin/bash", "-c", "bash  "+cmd };
-				Process p = Runtime.getRuntime().exec(command, null, new File(dir));
-				p.waitFor();
-				BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-	            String line = "";
-	            while ((line = input.readLine()) != null) {
-	            	logger.debug(line);
-	            }
-	            logger.debug("Script exit code :"+p.exitValue());
-	            if(p.exitValue()!=0) {
-	            	throw new TaskExecutorException("problem while executing the script . exit code :"+p.exitValue());
-	            }
-	            
-				
-			} catch (IOException e) {
-				throw new TaskExecutorException(cmd + " not found.");
-			} catch (InterruptedException e) {
-				throw new TaskExecutorException("problem while executing the script "+cmd);
-			}
-		
-	}
-		
-		
-		
-		
-		/*public void executeAirshipScript(String cmd)  {
-			
-			try {
-				logger.debug("Executing the script.............{}",cmd);
-				ProcessBuilder pb = new ProcessBuilder(cmd); 
-				Process shellProcess = pb.start();
-				
-				shellProcess.waitFor(); 
-				BufferedReader input = new BufferedReader(new InputStreamReader(shellProcess.getInputStream()));
-	            String line = "";
-	            while ((line = input.readLine()) != null) {
-	            	logger.debug(line);
-	            }
-	            logger.debug("Script exit code :"+shellProcess.exitValue());
-	            if(shellProcess.exitValue()!=0) {
-	            	throw new TaskExecutorException("problem while executing the script . exist code :"+shellProcess.exitValue());
-	            }
-	            
-				
-			} catch (IOException e) {
-				throw new TaskExecutorException(cmd + " not found.");
-			} catch (InterruptedException e) {
-				throw new TaskExecutorException("problem while executing the script "+cmd);
-			}
-		
-	}*/
 
+	}
+
+	/**
+	 * Execute a command in a directory
+	 * @param dir the directory to execute in
+	 * @param cmd the command to execute
+	 */
+	public void executeCDScript(String dir,String cmd)  {
+
+		try {
+			logger.debug("Executing the script.............dir:{},command:{}",dir,cmd);
+
+			String[] command = { "/bin/bash", "-c", "bash  "+cmd };
+			Process p = Runtime.getRuntime().exec(command, null, new File(dir));
+			p.waitFor();
+			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line = "";
+			while ((line = input.readLine()) != null) {
+				logger.debug(line);
+			}
+			logger.debug("Script exit code :"+p.exitValue());
+			if(p.exitValue()!=0) {
+				throw new TaskExecutorException("problem while executing the script. exit code :"+p.exitValue());
+			}
+		} catch (IOException e) {
+			throw new TaskExecutorException(cmd + " not found.");
+		} catch (InterruptedException e) {
+			throw new TaskExecutorException("problem while executing the script "+cmd);
+		}
+	}
+
+	/**
+	 * Execute a command in a directory
+	 * @param dir the directory to execute in
+	 * @param cmd the command to execute
+	 */
+	public void executeCDBashScript(String dir,String cmd)  {
+
+		try {
+			logger.debug("Executing the script.............dir:{},command:{}",dir,cmd);
+
+			String[] command = { "/bin/bash", "-c", "bash  "+cmd };
+			Process p = Runtime.getRuntime().exec(command, null, new File(dir));
+			p.waitFor();
+			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line = "";
+			while ((line = input.readLine()) != null) {
+				logger.debug(line);
+			}
+			logger.debug("Script exit code :"+p.exitValue());
+			if(p.exitValue()!=0) {
+				throw new TaskExecutorException("problem while executing the script . exit code :"+p.exitValue());
+			}
+		} catch (IOException e) {
+			throw new TaskExecutorException(cmd + " not found.");
+		} catch (InterruptedException e) {
+			throw new TaskExecutorException("problem while executing the script "+cmd);
+		}
+	}
+
+	/*public void executeAirshipScript(String cmd)  {
+
+		try {
+			logger.debug("Executing the script.............{}",cmd);
+			ProcessBuilder pb = new ProcessBuilder(cmd);
+			Process shellProcess = pb.start();
+
+			shellProcess.waitFor();
+			BufferedReader input = new BufferedReader(new InputStreamReader(shellProcess.getInputStream()));
+			String line = "";
+			while ((line = input.readLine()) != null) {
+				logger.debug(line);
+			}
+			logger.debug("Script exit code :"+shellProcess.exitValue());
+			if(shellProcess.exitValue()!=0) {
+				throw new TaskExecutorException("problem while executing the script. exit code :"+shellProcess.exitValue());
+			}
+
+
+		} catch (IOException e) {
+			throw new TaskExecutorException(cmd + " not found.");
+		} catch (InterruptedException e) {
+			throw new TaskExecutorException("problem while executing the script "+cmd);
+		}
+	}*/
 }

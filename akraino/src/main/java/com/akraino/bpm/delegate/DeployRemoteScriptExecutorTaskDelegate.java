@@ -27,19 +27,15 @@ import com.akraino.bpm.model.BuildResponse;
 import com.akraino.bpm.service.DeployResponseSenderService;
 import com.akraino.bpm.service.RemoteScriptExecutionService;
 
-
-
 @Component
 public class DeployRemoteScriptExecutorTaskDelegate implements JavaDelegate {
 
-	
-	
-	 private static Logger logger = LoggerFactory.getLogger(DeployRemoteScriptExecutorTaskDelegate.class);
+	private static Logger logger = LoggerFactory.getLogger(DeployRemoteScriptExecutorTaskDelegate.class);
 	
 	@Autowired
 	RemoteScriptExecutionService remoteScriptExecutionService;
 	
-	@Autowired 
+	@Autowired
 	DeployResponseSenderService deployResponseSenderService;
 	
 	public void execute(DelegateExecution ctx) throws Exception {
@@ -57,9 +53,8 @@ public class DeployRemoteScriptExecutorTaskDelegate implements JavaDelegate {
 		logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} ,fileparams={},src dir={},dest dir={}",
 				remotserver,portnumner,username,password,filename,fileparams,srcdir,destdir);
 		
-		String command="sh  " +destdir+"/"+filename+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
+		String command = String.format("/bin/bash %s/%s %s", destdir, filename, (fileparams!=null?fileparams.replaceAll(",", "  "):""));
 		logger.debug("Execution command {}",command);
 		remoteScriptExecutionService.executeRemoteScript(remotserver,username,password,portnumner,filename,fileparams,srcdir,destdir,command);
 	}
-
 }
