@@ -36,75 +36,71 @@ import com.jcraft.jsch.Session;
 @Service("remoteDeploymentVerificationService")
 public class RemoteDeploymentverificationServiceImpl implements RemoteDeploymentVerificationService{
 
-	private static Logger logger = LoggerFactory.getLogger(RemoteDeploymentverificationServiceImpl.class);
-	
-	public void executeScript(String remoteserver,String username,String password,int portnumber,
-			String filename,String fileparams,String srcdir,String destdir,int waitttime,int iterations,String command)  {
-		
-		boolean issuccess=false;
-		//String filepath=destdir+"/"+filename+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
-		ChannelExec channelExec=null;
-		BufferedReader reader =null;
-		Session session=null;
-		for( int i=0;i<=iterations;i++) {
-			try {
-				logger.debug("Executing the deployment verification script.............iteration : {}",i);
-				Thread.sleep(waitttime*1000);
-				JSch jsch = new JSch();
-				session = jsch.getSession(username, remoteserver, portnumber);
-				session.setConfig("StrictHostKeyChecking", "no");
-				session.setPassword(password);
-				session.connect();
-				channelExec = (ChannelExec)session.openChannel("exec");
-				InputStream in = channelExec.getInputStream();
-				channelExec.setPty(true);
-				channelExec.setCommand(command);
-				channelExec.connect();
-				reader = new BufferedReader(new InputStreamReader(in));
-				String line;
-				logger.debug("Script output......................");
-				while ((line = reader.readLine()) != null){
-					 logger.debug(line);
-				}
-				channelExec.disconnect();
-		        while (!channelExec.isClosed()) {
+        private static Logger logger = LoggerFactory.getLogger(RemoteDeploymentverificationServiceImpl.class);
 
-		        }
-		        int exitStatus = channelExec.getExitStatus();
-		        logger.debug("Script exit code :"+exitStatus);
-	            if(exitStatus==0) {
-	            	issuccess=true;
-	            }
-		    }
-			catch (IOException e) {
-					throw new TaskExecutorException(filename + " not found.");
-			} catch (Exception e) {
-					throw new TaskExecutorException("problem while executing the script "+command);
-			}finally{
-				if(reader!=null) {
-					try {
-						reader.close();
-					}catch(Exception e) {
-						throw new TaskExecutorException("onap build failed");
-					}
-				}
-				if(session!=null) {
-					session.disconnect();
-				}
-			}
-			
-			if(issuccess) {
-				break;
-			}
-			
-		}
-		
-		 if(!issuccess) {
-         	logger.debug("verification script returned 1 ");
-         	throw new TaskExecutorException(" verification script exit code : 1");
-         }
-	}
-	
-	
+        public void executeScript(String remoteserver,String username,String password,int portnumber,
+                String filename,String fileparams,String srcdir,String destdir,int waitttime,int iterations,String command)  {
 
+                boolean issuccess=true;
+                int exitStatus = 0;
+                //String filepath=destdir+"/"+filename+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
+                ChannelExec channelExec=null;
+                BufferedReader reader =null;
+                Session session=null;
+        
+                for( int i=0;i<iterations;i++) {
+                        try {
+                                logger.debug("Executing the deployment verification script: {}  iteration: {}", command, i);
+                                Thread.sleep(waitttime*1000);
+                                JSch jsch = new JSch();
+                                session = jsch.getSession(username, remoteserver, portnumber);
+                                session.setConfig("StrictHostKeyChecking", "no");
+                                session.setPassword(password);
+                                session.connect();
+                                channelExec = (ChannelExec)session.openChannel("exec");
+                                InputStream in = channelExec.getInputStream();
+                                channelExec.setPty(true);
+                                channelExec.setCommand(command);
+                                channelExec.connect();
+                                reader = new BufferedReader(new InputStreamReader(in));
+                                String line;
+                                logger.debug("Script output......................");
+                                while ((line = reader.readLine()) != null) {
+                                         logger.debug(line);
+                                }
+                                channelExec.disconnect();
+                                while (!channelExec.isClosed()) {
+
+                                }
+                                exitStatus = channelExec.getExitStatus();
+                                logger.debug("Script exit code: "+exitStatus);
+                                issuccess = (exitStatus==0);
+                        }
+                        catch (IOException e) {
+                                throw new TaskExecutorException("script: " + command + " not found.");
+                        } catch (Exception e) {
+                                throw new TaskExecutorException("problem while executing the script " + command);
+                        } finally {
+                                if(reader!=null) {
+                                        try {
+                                            reader.close();
+                                        } catch(Exception e) {
+                                            throw new TaskExecutorException("verification script failed");
+                                        }
+                                }
+                                if(session!=null) {
+                                        session.disconnect();
+                                }
+                        }
+
+                        if(issuccess) {
+                                break;
+                        }
+                }
+
+                if(!issuccess) {
+                        logger.debug("verification script failed. script: {}  last exit code: {}", command, exitStatus);
+                        throw new TaskExecutorException(" verification script exit code : 1");
+                }
+        }
 }
