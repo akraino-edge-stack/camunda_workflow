@@ -15,7 +15,7 @@
       <bpmn:outgoing>SequenceFlow_1jh4nm3</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_1jh4nm3" sourceRef="Task_1jo0y1o" targetRef="DeployRemoteexecutor" />
-    <bpmn:serviceTask id="Task_0ss7pht" name="Deploymentverfier" camunda:delegateExpression="#{DeployRemoteDeploymentVerificationDelegate}">
+    <bpmn:serviceTask id="Task_0ss7pht" name="Deploymentverfier" camunda:delegateExpression="#{deployRemoteDeploymentVerificationDelegate}">
       <bpmn:incoming>SequenceFlow_064ccvc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0e9qo9c</bpmn:outgoing>
     </bpmn:serviceTask>
