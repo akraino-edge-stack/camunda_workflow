@@ -43,7 +43,7 @@ public class DeployPostVerficationRemoteScriptExecutor implements JavaDelegate {
         
                 try {
                         String remoteserver =(String) ctx.getVariable("remotserver");
-                        int    portnumner   =(Integer)ctx.getVariable("port");
+                        int    portnumber   =(Integer)ctx.getVariable("port");
                         String username     =(String) ctx.getVariable("username");
                         String password     =(String) ctx.getVariable("password");
                         String filename     =(String) ctx.getVariable("postverificationscript");
@@ -54,13 +54,13 @@ public class DeployPostVerficationRemoteScriptExecutor implements JavaDelegate {
                         String blueprint    =(String) ctx.getVariable("blueprint");
 
                         deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","inprogress",sitename,null,null,null));
-                        logger.debug("task execution started blueprint {}, remoteserver {}, portnumner {}, username {}, password {}, filename {}, fileparams {}, src dir={}, dest dir={}",
-                                        blueprint,remoteserver,portnumner,username,password,filename,fileparams,srcdir,destdir);
+                        logger.debug("task execution started blueprint {}, remoteserver {}, portnumber {}, username {}, password {}, filename {}, fileparams {}, src dir={}, dest dir={}",
+                                                             blueprint,    remoteserver,    portnumber,    username,    password,    filename,    fileparams,    srcdir,     destdir);
 
                         String command = String.format("/bin/bash %s/%s %s", destdir, filename, (fileparams!=null?fileparams.replaceAll(",", "  "):""));
-                        if ( !filename.equals("null") || !filename.equals("") ) {
+                        if ( filename != null && !filename.equals("null") && !filename.isEmpty() ) {
                                 logger.debug("Execution command {}",command);
-                                remoteScriptExecutionService.executeRemoteScript(remoteserver,username,password,portnumner,filename,fileparams,srcdir,destdir,command);
+                                remoteScriptExecutionService.executeRemoteScript(remoteserver,username,password,portnumber,filename,fileparams,srcdir,destdir,command);
                         } else {
                                 logger.debug("Skipping invalid verification command: {}", command);
                         }

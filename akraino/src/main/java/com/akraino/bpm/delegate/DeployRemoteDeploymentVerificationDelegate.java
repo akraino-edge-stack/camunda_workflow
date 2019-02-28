@@ -43,27 +43,27 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
 
                 try {
                         String remoteserver =(String) ctx.getVariable("remotserver");
-                        int    portnumner   =(Integer)ctx.getVariable("port");
+                        int    portnumber   =(Integer)ctx.getVariable("port");
                         String username     =(String) ctx.getVariable("username");
                         String password     =(String) ctx.getVariable("password");
-                        String filename     =(String) ctx.getVariable("verifier");
-                        String fileparams   =(String) ctx.getVariable("verifierfileparams");
+                        String filename     =(String) ctx.getVariable("deploymentverifier");
+                        String fileparams   =(String) ctx.getVariable("deploymentverifierfileparams");
                         String srcdir       =(String) ctx.getVariable("srcdir");
                         String destdir      =(String) ctx.getVariable("destdir");
                         String sitename     =(String) ctx.getVariable("sitename");
                         String blueprint    =(String) ctx.getVariable("blueprint");
                         int    waittime     =(Integer)ctx.getVariable("waittime");
-                        int    iterations   =(Integer)ctx.getVariable("iterations");
+                        int    iterations   =(Integer)ctx.getVariable("noofiterations");
 
                         deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started", sitename,null,null,null));
 
-                        logger.debug("task execution started blueprint {}, remoteserver {}, portnumner {}, username {}, password {}, filename {}, waittime {}, No of iterations {}",
-                                        blueprint,remoteserver,portnumner,username,password,filename,srcdir,destdir,waittime,iterations);
+                        logger.debug("task execution started blueprint {}, remoteserver {}, portnumber {}, username {}, password {}, filename {}, waittime {}, No of iterations {}",
+                                                             blueprint,    remoteserver,    portnumber,    username,    password,    filename,    waittime,    iterations);
 
                         String command = String.format("/bin/bash %s/%s %s", destdir, filename, (fileparams!=null?fileparams.replaceAll(",", "  "):""));
-                        if ( !filename.equals("null") || !filename.equals("") ) {
+                        if ( filename != null && !filename.equals("null") && !filename.isEmpty() ) {
                                 logger.debug("Execution command: {}",command);
-                                remotedeploymentVerificationService.executeScript(remoteserver,username,password,portnumner,filename,fileparams,srcdir,destdir,waittime,iterations,command);
+                                remotedeploymentVerificationService.executeScript(remoteserver,username,password,portnumber,filename,fileparams,srcdir,destdir,waittime,iterations,command);
                         } else {
                                 logger.debug("Skipping invalid verification command: {}", command);
                         }
