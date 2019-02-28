@@ -31,39 +31,45 @@ import com.akraino.bpm.service.RemoteDeploymentVerificationService;
 @Component
 public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate {
 
-	private static Logger logger = LoggerFactory.getLogger(DeployRemoteDeploymentVerificationDelegate.class);
-	
-	@Autowired
-	RemoteDeploymentVerificationService remotedeploymentVerificationService;
-	
-	@Autowired
-	DeployResponseSenderService deployResponseSenderService;
+        private static Logger logger = LoggerFactory.getLogger(DeployRemoteDeploymentVerificationDelegate.class);
 
-	public void execute(DelegateExecution ctx) throws Exception {
-		
-		try {
-			String  verifierFilename=(String)ctx.getVariable("verifier");
-			int waittime=(Integer)ctx.getVariable("waittime");
-			int iterations=(Integer)ctx.getVariable("iterations");
-			String  remotserver=(String)ctx.getVariable("remotserver");
-			int  portnumner=(Integer)ctx.getVariable("port");
-			String  username=(String)ctx.getVariable("username");
-			String  password=(String)ctx.getVariable("password");
-			String  srcdir=(String)ctx.getVariable("srcdir");
-			String  destdir=(String)ctx.getVariable("destdir");
-			String  filepparams=(String)ctx.getVariable("verifierfileparams");
-			String sitename=(String)ctx.getVariable("sitename");
-			
-			deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started", sitename,null,null,null));
-			
-			logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} , waittime : {},No of iterations :{}",
-					remotserver,portnumner,username,password,verifierFilename,srcdir,destdir,waittime,iterations);
-			
-			String command = String.format("/bin/bash %s/%s %s", destdir, verifierFilename, (filepparams!=null?filepparams.replaceAll(",", "  "):""));
-			logger.debug("Execution command {}",command);
-			remotedeploymentVerificationService.executeScript(remotserver,username,password,portnumner,verifierFilename,filepparams,srcdir,destdir,waittime,iterations,command);
-		} catch(TaskExecutorException ex) {
-			throw ex;
-		}	
-	}
+        @Autowired
+        RemoteDeploymentVerificationService remotedeploymentVerificationService;
+
+        @Autowired
+        DeployResponseSenderService deployResponseSenderService;
+
+        public void execute(DelegateExecution ctx) throws Exception {
+
+                try {
+                        String remoteserver =(String) ctx.getVariable("remotserver");
+                        int    portnumner   =(Integer)ctx.getVariable("port");
+                        String username     =(String) ctx.getVariable("username");
+                        String password     =(String) ctx.getVariable("password");
+                        String filename     =(String) ctx.getVariable("verifier");
+                        String fileparams   =(String) ctx.getVariable("verifierfileparams");
+                        String srcdir       =(String) ctx.getVariable("srcdir");
+                        String destdir      =(String) ctx.getVariable("destdir");
+                        String sitename     =(String) ctx.getVariable("sitename");
+                        String blueprint    =(String) ctx.getVariable("blueprint");
+                        int    waittime     =(Integer)ctx.getVariable("waittime");
+                        int    iterations   =(Integer)ctx.getVariable("iterations");
+
+                        deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started", sitename,null,null,null));
+
+                        logger.debug("task execution started blueprint {}, remoteserver {}, portnumner {}, username {}, password {}, filename {}, waittime {}, No of iterations {}",
+                                        blueprint,remoteserver,portnumner,username,password,filename,srcdir,destdir,waittime,iterations);
+
+                        String command = String.format("/bin/bash %s/%s %s", destdir, filename, (fileparams!=null?fileparams.replaceAll(",", "  "):""));
+                        if ( !filename.equals("null") || !filename.equals("") ) {
+                                logger.debug("Execution command: {}",command);
+                                remotedeploymentVerificationService.executeScript(remoteserver,username,password,portnumner,filename,fileparams,srcdir,destdir,waittime,iterations,command);
+                        } else {
+                                logger.debug("Skipping invalid verification command: {}", command);
+                        }
+                } catch(TaskExecutorException ex) {
+                        throw ex;
+                }
+        }
 }
+

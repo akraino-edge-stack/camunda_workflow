@@ -23,40 +23,50 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.akraino.bpm.Exception.TaskExecutorException;
 import com.akraino.bpm.model.BuildResponse;
 import com.akraino.bpm.service.DeployResponseSenderService;
 import com.akraino.bpm.service.RemoteScriptExecutionService;
 
-
-
 @Component
 public class DeployPostVerficationRemoteScriptExecutor implements JavaDelegate {
 
-	private static Logger logger = LoggerFactory.getLogger(DeployPostVerficationRemoteScriptExecutor.class);
+        private static Logger logger = LoggerFactory.getLogger(DeployPostVerficationRemoteScriptExecutor.class);
 
-	@Autowired
-	RemoteScriptExecutionService remoteScriptExecutionService;
+        @Autowired
+        RemoteScriptExecutionService remoteScriptExecutionService;
 
-	@Autowired
-	DeployResponseSenderService deployResponseSenderService;
+        @Autowired
+        DeployResponseSenderService deployResponseSenderService;
 
-	public void execute(DelegateExecution ctx) throws Exception {
-		String  remotserver=(String)ctx.getVariable("remotserver");
-		int  portnumner=(Integer)ctx.getVariable("port");
-		String  username=(String)ctx.getVariable("username");
-		String  password=(String)ctx.getVariable("password");
-		String  filename=(String)ctx.getVariable("postverificationscript");
-		String fileparams=(String)ctx.getVariable("postverificationScriptparams");
-		String  srcdir=(String)ctx.getVariable("srcdir");
-		String destdir=(String)ctx.getVariable("destdir");
-		String sitename=(String)ctx.getVariable("sitename");
-		
-		deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","inprogress",sitename,null,null,null));
-		logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} ,fileparams={},src dir={},dest dir={}",
-				remotserver,portnumner,username,password,filename,fileparams,srcdir,destdir);
-		
-		String command = String.format("/bin/bash %s/%s %s", destdir, filename, (fileparams!=null?fileparams.replaceAll(",", "  "):""));
-		logger.debug("Execution command {}",command);
-		remoteScriptExecutionService.executeRemoteScript(remotserver,username,password,portnumner,filename,fileparams,srcdir,destdir,command);
-	}
+        public void execute(DelegateExecution ctx) throws Exception {
+        
+                try {
+                        String remoteserver =(String) ctx.getVariable("remotserver");
+                        int    portnumner   =(Integer)ctx.getVariable("port");
+                        String username     =(String) ctx.getVariable("username");
+                        String password     =(String) ctx.getVariable("password");
+                        String filename     =(String) ctx.getVariable("postverificationscript");
+                        String fileparams   =(String) ctx.getVariable("postverificationScriptparams");
+                        String srcdir       =(String) ctx.getVariable("srcdir");
+                        String destdir      =(String) ctx.getVariable("destdir");
+                        String sitename     =(String) ctx.getVariable("sitename");
+                        String blueprint    =(String) ctx.getVariable("blueprint");
+
+                        deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","inprogress",sitename,null,null,null));
+                        logger.debug("task execution started blueprint {}, remoteserver {}, portnumner {}, username {}, password {}, filename {}, fileparams {}, src dir={}, dest dir={}",
+                                        blueprint,remoteserver,portnumner,username,password,filename,fileparams,srcdir,destdir);
+
+                        String command = String.format("/bin/bash %s/%s %s", destdir, filename, (fileparams!=null?fileparams.replaceAll(",", "  "):""));
+                        if ( !filename.equals("null") || !filename.equals("") ) {
+                                logger.debug("Execution command {}",command);
+                                remoteScriptExecutionService.executeRemoteScript(remoteserver,username,password,portnumner,filename,fileparams,srcdir,destdir,command);
+                        } else {
+                                logger.debug("Skipping invalid verification command: {}", command);
+                        }
+                } catch(TaskExecutorException ex) {
+                        throw ex;
+                }
+        }
 }
+
