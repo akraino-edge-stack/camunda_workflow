@@ -53,7 +53,7 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
                         String sitename     =(String) ctx.getVariable("sitename");
                         String blueprint    =(String) ctx.getVariable("blueprint");
                         int    waittime     =(Integer)ctx.getVariable("waittime");
-                        int    iterations   =(Integer)ctx.getVariable("noofiterations");
+                        int    iterations   =(Integer)ctx.getVariable("iterations");
 
                         deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started", sitename,null,null,null));
 
