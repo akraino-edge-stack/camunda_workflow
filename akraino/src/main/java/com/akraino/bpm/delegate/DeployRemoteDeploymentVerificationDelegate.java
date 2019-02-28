@@ -46,8 +46,8 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
                         int    portnumber   =(Integer)ctx.getVariable("port");
                         String username     =(String) ctx.getVariable("username");
                         String password     =(String) ctx.getVariable("password");
-                        String filename     =(String) ctx.getVariable("deploymentverifier");
-                        String fileparams   =(String) ctx.getVariable("deploymentverifierfileparams");
+                        String filename     =(String) ctx.getVariable("verifier");
+                        String fileparams   =(String) ctx.getVariable("verifierfileparams");
                         String srcdir       =(String) ctx.getVariable("srcdir");
                         String destdir      =(String) ctx.getVariable("destdir");
                         String sitename     =(String) ctx.getVariable("sitename");
