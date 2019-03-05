@@ -55,7 +55,7 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
                         int    waittime     =(Integer)ctx.getVariable("waittime");
                         int    iterations   =(Integer)ctx.getVariable("iterations");
 
-                        deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "inprogress","not started", sitename,null,null,null));
+                        deployResponseSenderService.sendResponse(new BuildResponse(null, null, null, null, "verifying...", sitename,null,null,null));
 
                         logger.debug("task execution started blueprint {}, remoteserver {}, portnumber {}, username {}, password {}, filename {}, waittime {}, No of iterations {}",
                                                              blueprint,    remoteserver,    portnumber,    username,    password,    filename,    waittime,    iterations);

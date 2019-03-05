@@ -53,7 +53,7 @@ public class DeployPostVerficationRemoteScriptExecutor implements JavaDelegate {
                         String sitename     =(String) ctx.getVariable("sitename");
                         String blueprint    =(String) ctx.getVariable("blueprint");
 
-                        deployResponseSenderService.sendResponse(new BuildResponse("completed", "completed", "completed", "completed","inprogress",sitename,null,null,null));
+                        deployResponseSenderService.sendResponse(new BuildResponse(null, null, null, null, "completed", sitename, null, null, null));
                         logger.debug("task execution started blueprint {}, remoteserver {}, portnumber {}, username {}, password {}, filename {}, fileparams {}, src dir={}, dest dir={}",
                                                              blueprint,    remoteserver,    portnumber,    username,    password,    filename,    fileparams,    srcdir,     destdir);
 
