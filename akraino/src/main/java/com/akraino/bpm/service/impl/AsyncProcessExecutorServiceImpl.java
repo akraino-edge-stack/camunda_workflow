@@ -115,7 +115,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
                         return;
                 }
                 logger.debug("deploy execution success ");
-                deployResponseSenderService.sendResponse(new BuildResponse("success","success","success","success","success",deploy.getSitename(),null,null,null));
+                deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,"success",deploy.getSitename(),null,null,null));
         }
 
 
@@ -160,7 +160,7 @@ public class AsyncProcessExecutorServiceImpl implements AsyncProcessExecutorServ
                           return;
                 }
                 logger.debug("Onap execution success ");
-                deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,onap.getSitename(),"succes",null,null));
+                deployResponseSenderService.sendResponse(new BuildResponse(null,null,null,null,null,onap.getSitename(),"success",null,null));
         }
 
 
