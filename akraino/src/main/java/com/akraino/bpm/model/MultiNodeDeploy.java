@@ -23,7 +23,7 @@ public class MultiNodeDeploy {
 	private String file1params;
 	private String winscpfilepath;
 	private String winscpfileparams;
-	private String remotserver;
+	private String remoteserver;
 	private int port;
 	private String username;
 	private String password;
@@ -63,11 +63,11 @@ public class MultiNodeDeploy {
 	public void setWinscpfileparams(String winscpfileparams) {
 		this.winscpfileparams = winscpfileparams;
 	}
-	public String getRemotserver() {
-		return remotserver;
+	public String getRemoteserver() {
+		return remoteserver;
 	}
-	public void setRemotserver(String remotserver) {
-		this.remotserver = remotserver;
+	public void setRemoteserver(String remoteserver) {
+		this.remoteserver = remoteserver;
 	}
 	public int getPort() {
 		return port;
@@ -129,8 +129,8 @@ public class MultiNodeDeploy {
 	@Override
 	public String toString() {
 		return "MultiNodeDeploy [sitename=" + sitename + ", file1=" + file1 + ", file1params=" + file1params
-				+ ", winscpfilepath=" + winscpfilepath + ", winscpfileparams=" + winscpfileparams + ", remotserver="
-				+ remotserver + ", port=" + port + ", username=" + username + ", password=" + password + ", destdir1="
+				+ ", winscpfilepath=" + winscpfilepath + ", winscpfileparams=" + winscpfileparams + ", remoteserver="
+				+ remoteserver + ", port=" + port + ", username=" + username + ", password=" + password + ", destdir1="
 				+ destdir1 + ", remotefile1=" + remotefile1 + ", remotefile1params=" + remotefile1params + ", destdir2="
 				+ destdir2 + ", remotefile2=" + remotefile2 + ", remotefile2params=" + remotefile2params + "]";
 	}

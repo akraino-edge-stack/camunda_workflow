@@ -24,7 +24,7 @@ public class Airship {
 	private String winscpdir;
 	private String winscpfilepath;
 	private String winscpfileparams;
-	private String remotserver;
+	private String remoteserver;
 	private int port;
 	private String username;
 	private String password;
@@ -64,11 +64,11 @@ public class Airship {
 		this.destdir = destdir;
 	}
 	
-	public String getRemotserver() {
-		return remotserver;
+	public String getRemoteserver() {
+		return remoteserver;
 	}
-	public void setRemotserver(String remotserver) {
-		this.remotserver = remotserver;
+	public void setRemoteserver(String remoteserver) {
+		this.remoteserver = remoteserver;
 	}
 	public int getPort() {
 		return port;
@@ -116,7 +116,7 @@ public class Airship {
 	public String toString() {
 		return "Airship [sitename=" + sitename + ", filepath=" + filepath + ", fileparams=" + fileparams
 				+ ", winscpdir=" + winscpdir + ", winscpfilepath=" + winscpfilepath + ", winscpfileparams="
-				+ winscpfileparams + ", remotserver=" + remotserver + ", port=" + port + ", username=" + username
+				+ winscpfileparams + ", remoteserver=" + remoteserver + ", port=" + port + ", username=" + username
 				+ ", password=" + password + ", destdir=" + destdir + ", remotefilename=" + remotefilename
 				+ ", remotefileparams=" + remotefileparams + "]";
 	}

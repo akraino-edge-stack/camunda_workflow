@@ -42,7 +42,7 @@ public class DeployPostVerficationRemoteScriptExecutor implements JavaDelegate {
         public void execute(DelegateExecution ctx) throws Exception {
         
                 try {
-                        String remoteserver =(String) ctx.getVariable("remotserver");
+                        String remoteserver =(String) ctx.getVariable("remoteserver");
                         int    portnumber   =(Integer)ctx.getVariable("port");
                         String username     =(String) ctx.getVariable("username");
                         String password     =(String) ctx.getVariable("password");

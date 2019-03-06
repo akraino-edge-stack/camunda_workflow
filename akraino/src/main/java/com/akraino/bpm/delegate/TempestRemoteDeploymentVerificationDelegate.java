@@ -44,20 +44,20 @@ public class TempestRemoteDeploymentVerificationDelegate implements JavaDelegate
 			String  verifierFilename=(String)ctx.getVariable("verifier");
 			int waittime=(Integer)ctx.getVariable("waittime");
 			int iterations=(Integer)ctx.getVariable("iterations");
-			String  remotserver=(String)ctx.getVariable("remotserver");
-			int  portnumner=(Integer)ctx.getVariable("port");
+			String  remoteserver=(String)ctx.getVariable("remoteserver");
+			int  portnumber=(Integer)ctx.getVariable("port");
 			String  username=(String)ctx.getVariable("username");
 			String  password=(String)ctx.getVariable("password");
 			String  srcdir=(String)ctx.getVariable("srcdir");
 			String  destdir=(String)ctx.getVariable("destdir");
 			String  filepparams=(String)ctx.getVariable("verifierfileparams");
 			
-			logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} , waittime : {},No of iterations :{}",
-					remotserver,portnumner,username,password,verifierFilename,srcdir,destdir,waittime,iterations);
+			logger.debug("task execution started remoteserver {} , portnumber {},username {}, password {},filename : {} , waittime : {},No of iterations :{}",
+					remoteserver,portnumber,username,password,verifierFilename,srcdir,destdir,waittime,iterations);
 			
 			String command= "cd  "+destdir+ ";" + (filepparams!=null?filepparams:"  ")+ " ./"+verifierFilename;
 			logger.debug("Execution command {}",command);
-			remotedeploymentVerificationService.executeScript(remotserver,username,password,portnumner,verifierFilename,filepparams,srcdir,destdir,waittime,iterations,command);
+			remotedeploymentVerificationService.executeScript(remoteserver,username,password,portnumber,verifierFilename,filepparams,srcdir,destdir,waittime,iterations,command);
 		}catch(TaskExecutorException ex) {
 			throw ex;
 		}

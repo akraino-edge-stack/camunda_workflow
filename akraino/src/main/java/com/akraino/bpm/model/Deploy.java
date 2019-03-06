@@ -24,7 +24,7 @@ public class Deploy {
         private String fileparams;
         private String winscpfilepath;
         private String winscpfileparams;
-        private String remotserver;
+        private String remoteserver;
         private int port;
         private String username;
         private String password;
@@ -81,11 +81,11 @@ public class Deploy {
         public void setDestdir(String destdir) {
                 this.destdir = destdir;
         }
-        public String getRemotserver() {
-                return remotserver;
+        public String getRemoteserver() {
+                return remoteserver;
         }
-        public void setRemotserver(String remotserver) {
-                this.remotserver = remotserver;
+        public void setRemoteserver(String remoteserver) {
+                this.remoteserver = remoteserver;
         }
         public int getPort() {
                 return port;
@@ -163,8 +163,8 @@ public class Deploy {
         @Override
         public String toString() {
                 return "Deploy [sitename=" + sitename + ", blueprint=" + blueprint + ", filepath=" + filepath + ", fileparams=" + fileparams
-                        + ", winscpfilepath=" + winscpfilepath + ", winscpfileparams=" + winscpfileparams + ", remotserver="
-                        + remotserver + ", port=" + port + ", username=" + username + ", password=" + password + ", destdir="
+                        + ", winscpfilepath=" + winscpfilepath + ", winscpfileparams=" + winscpfileparams + ", remoteserver="
+                        + remoteserver + ", port=" + port + ", username=" + username + ", password=" + password + ", destdir="
                         + destdir + ", remotefilename=" + remotefilename + ", remotefileparams=" + remotefileparams
                         + ", deploymentverifier=" + deploymentverifier + ", deploymentverifierfileparams="
                         + deploymentverifierfileparams + ", noofiterations=" + noofiterations + ", waittime=" + waittime

@@ -43,16 +43,16 @@ public class FileTransferDelegator implements JavaDelegate {
 		
 		try {
 			
-			String  remotserver=(String)ctx.getVariable("remotserver");
+			String  remoteserver=(String)ctx.getVariable("remoteserver");
 			int  port=(Integer)ctx.getVariable("port");
 			String  username=(String)ctx.getVariable("username");
 			String  password=(String)ctx.getVariable("password");
 			String  srcdir=(String)ctx.getVariable("srcdir");
 			String  destdir=(String)ctx.getVariable("destdir");
 			
-			logger.debug("File transfer  started remotserver {} , portnumner {},username {}, password {},src ={}, dest={}",
-					remotserver,port,username,password,srcdir,destdir);
-			fileTransferService.transferFile(srcdir, destdir,remotserver, username, password, port);
+			logger.debug("File transfer  started remoteserver {} , portnumber {},username {}, password {},src ={}, dest={}",
+					remoteserver,port,username,password,srcdir,destdir);
+			fileTransferService.transferFile(srcdir, destdir,remoteserver, username, password, port);
 		}catch(TaskExecutorException ex) {
 			throw ex;
 		}

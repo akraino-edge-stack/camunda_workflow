@@ -39,8 +39,8 @@ public class DeployRemoteScriptExecutorTaskDelegate implements JavaDelegate {
 	DeployResponseSenderService deployResponseSenderService;
 	
 	public void execute(DelegateExecution ctx) throws Exception {
-		String  remotserver=(String)ctx.getVariable("remotserver");
-		int  portnumner=(Integer)ctx.getVariable("port");
+		String  remoteserver=(String)ctx.getVariable("remoteserver");
+		int  portnumber=(Integer)ctx.getVariable("port");
 		String  username=(String)ctx.getVariable("username");
 		String  password=(String)ctx.getVariable("password");
 		String  filename=(String)ctx.getVariable("filename");
@@ -50,11 +50,11 @@ public class DeployRemoteScriptExecutorTaskDelegate implements JavaDelegate {
 		String sitename=(String)ctx.getVariable("sitename");
 		
 		deployResponseSenderService.sendResponse(new BuildResponse(null, null, null, null, "in progress...", sitename, null, null, null));
-		logger.debug("task execution started remotserver {} , portnumner {},username {}, password {},filename : {} ,fileparams={},src dir={},dest dir={}",
-				remotserver,portnumner,username,password,filename,fileparams,srcdir,destdir);
+		logger.debug("task execution started remoteserver {} , portnumber {},username {}, password {},filename : {} ,fileparams={},src dir={},dest dir={}",
+				remoteserver,portnumber,username,password,filename,fileparams,srcdir,destdir);
 		
 		String command = String.format("/bin/bash %s/%s %s", destdir, filename, (fileparams!=null?fileparams.replaceAll(",", "  "):""));
 		logger.debug("Execution command {}",command);
-		remoteScriptExecutionService.executeRemoteScript(remotserver,username,password,portnumner,filename,fileparams,srcdir,destdir,command);
+		remoteScriptExecutionService.executeRemoteScript(remoteserver,username,password,portnumber,filename,fileparams,srcdir,destdir,command);
 	}
 }
