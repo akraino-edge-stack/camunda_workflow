@@ -45,18 +45,18 @@ public class MultiNodeDeployRemoteScript1ExecutorTaskDelegate implements JavaDel
 		
 
 		String  remoteserver=(String)ctx.getVariable("remoteserver");
-		int  portnumber=(Integer)ctx.getVariable("port");
+		int  port=(Integer)ctx.getVariable("port");
 		String  username=(String)ctx.getVariable("username");
 		String  password=(String)ctx.getVariable("password");
 		String  filename=(String)ctx.getVariable("remotefile1");
 		String fileparams=(String)ctx.getVariable("remotefile1params");
 		String destdir=(String)ctx.getVariable("destdir1");
 		
-		logger.debug("task execution started remoteserver {} , portnumber {},username {}, password {},filename : {} ,fileparams={},dest dir={}",
-				remoteserver,portnumber,username,password,filename,fileparams,destdir);
+		logger.debug("task execution started remoteserver {} , port {},username {}, password {},filename : {} ,fileparams={},dest dir={}",
+				remoteserver,port,username,password,filename,fileparams,destdir);
 		String command="cd   "+destdir+ ";" +" bash  "+filename+"  "+ (fileparams!=null?fileparams:" ") ;
 		logger.debug("Execution command {}",command);
-		remoteScriptExecutionService.executeRemoteScript(remoteserver,username,password,portnumber,filename,fileparams,null,destdir,command);
+		remoteScriptExecutionService.executeRemoteScript(remoteserver,username,password,port,filename,fileparams,null,destdir,command);
 	}
 
 }

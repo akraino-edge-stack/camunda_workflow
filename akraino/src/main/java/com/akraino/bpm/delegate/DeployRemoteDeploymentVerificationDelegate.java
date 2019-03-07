@@ -43,7 +43,7 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
 
                 try {
                         String remoteserver =(String) ctx.getVariable("remoteserver");
-                        int    portnumber   =(Integer)ctx.getVariable("port");
+                        int    port   =(Integer)ctx.getVariable("port");
                         String username     =(String) ctx.getVariable("username");
                         String password     =(String) ctx.getVariable("password");
                         String filename     =(String) ctx.getVariable("verifier");
@@ -57,13 +57,13 @@ public class DeployRemoteDeploymentVerificationDelegate implements JavaDelegate 
 
                         deployResponseSenderService.sendResponse(new BuildResponse(null, null, null, null, "verifying...", sitename,null,null,null));
 
-                        logger.debug("task execution started blueprint {}, remoteserver {}, portnumber {}, username {}, password {}, filename {}, waittime {}, No of iterations {}",
-                                                             blueprint,    remoteserver,    portnumber,    username,    password,    filename,    waittime,    iterations);
+                        logger.debug("task execution started blueprint {}, remoteserver {}, port {}, username {}, password {}, filename {}, waittime {}, No of iterations {}",
+                                                             blueprint,    remoteserver,    port,    username,    password,    filename,    waittime,    iterations);
 
                         String command = String.format("/bin/bash %s/%s %s", destdir, filename, (fileparams!=null?fileparams.replaceAll(",", "  "):""));
                         if ( filename != null && !filename.equals("null") && !filename.isEmpty() ) {
                                 logger.debug("Execution command: {}",command);
-                                remotedeploymentVerificationService.executeScript(remoteserver,username,password,portnumber,filename,fileparams,srcdir,destdir,waittime,iterations,command);
+                                remotedeploymentVerificationService.executeScript(remoteserver,username,password,port,filename,fileparams,srcdir,destdir,waittime,iterations,command);
                         } else {
                                 logger.debug("Skipping invalid verification command: {}", command);
                         }

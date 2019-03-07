@@ -22,7 +22,7 @@ public class Tempest {
 	private String remoteserver;
 	private String username;
 	private String  password;
-	private int portnumber;
+	private int port;
 	private String srcdir;
 	private String destdir;
 	private String filename;
@@ -98,13 +98,13 @@ public class Tempest {
 	}
 
 
-	public int getPortnumber() {
-		return portnumber;
+	public int getPort() {
+		return port;
 	}
 
 
-	public void setPortnumber(int portnumber) {
-		this.portnumber = portnumber;
+	public void setPort(int port) {
+		this.port = port;
 	}
 
 
@@ -198,7 +198,7 @@ public class Tempest {
 	@Override
 	public String toString() {
 		return "Tempest [sitename=" + sitename + ", remoteserver=" + remoteserver + ", username=" + username
-				+ ", password=" + password + ", portnumber=" + portnumber + ", srcdir=" + srcdir + ", destdir="
+				+ ", password=" + password + ", port=" + port + ", srcdir=" + srcdir + ", destdir="
 				+ destdir + ", filename=" + filename + ", fileparams=" + fileparams + ", deploymentverifier="
 				+ deploymentverifier + ", verifierparams=" + verifierparams + ", noofiterations=" + noofiterations
 				+ ", waittime=" + waittime + ", filetrasferscript=" + filetrasferscript + ", filetransferparams="

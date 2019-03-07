@@ -45,20 +45,20 @@ public class RemoteDeploymentVerificationDelegate implements JavaDelegate {
 			int waittime=(Integer)ctx.getVariable("waittime");
 			int iterations=(Integer)ctx.getVariable("iterations");
 			String  remoteserver=(String)ctx.getVariable("remoteserver");
-			int  portnumber=(Integer)ctx.getVariable("port");
+			int  port=(Integer)ctx.getVariable("port");
 			String  username=(String)ctx.getVariable("username");
 			String  password=(String)ctx.getVariable("password");
 			String  srcdir=(String)ctx.getVariable("srcdir");
 			String  destdir=(String)ctx.getVariable("destdir");
 			String  filepparams=(String)ctx.getVariable("verifierfileparams");
 			
-			logger.debug("task execution started remoteserver {} , portnumber {},username {}, password {},filename : {} , waittime : {},No of iterations :{}",
-					remoteserver,portnumber,username,password,verifierFilename,srcdir,destdir,waittime,iterations);
+			logger.debug("task execution started remoteserver {} , port {},username {}, password {},filename : {} , waittime : {},No of iterations :{}",
+					remoteserver,port,username,password,verifierFilename,srcdir,destdir,waittime,iterations);
 			
 			// This looks wrong!
 			String command = "/bin/bash  " +destdir+"/"+(verifierFilename!=null?verifierFilename:"  ")+"  "+(filepparams!=null?filepparams.replaceAll(",", "  "):" ");
 			logger.debug("Execution command {}",command);
-			remotedeploymentVerificationService.executeScript(remoteserver,username,password,portnumber,verifierFilename,filepparams,srcdir,destdir,waittime,iterations,command);
+			remotedeploymentVerificationService.executeScript(remoteserver,username,password,port,verifierFilename,filepparams,srcdir,destdir,waittime,iterations,command);
 		} catch(TaskExecutorException ex) {
 			throw ex;
 		}	

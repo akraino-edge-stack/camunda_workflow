@@ -38,7 +38,7 @@ public class RemoteDeploymentverificationServiceImpl implements RemoteDeployment
 
         private static Logger logger = LoggerFactory.getLogger(RemoteDeploymentverificationServiceImpl.class);
 
-        public void executeScript(String remoteserver,String username,String password,int portnumber,
+        public void executeScript(String remoteserver,String username,String password,int port,
                 String filename,String fileparams,String srcdir,String destdir,int waitttime,int iterations,String command)  {
 
                 boolean issuccess=true;
@@ -53,7 +53,7 @@ public class RemoteDeploymentverificationServiceImpl implements RemoteDeployment
                                 logger.debug("Executing the deployment verification script: {}  iteration: {}", command, i);
                                 Thread.sleep(waitttime*1000);
                                 JSch jsch = new JSch();
-                                session = jsch.getSession(username, remoteserver, portnumber);
+                                session = jsch.getSession(username, remoteserver, port);
                                 session.setConfig("StrictHostKeyChecking", "no");
                                 session.setPassword(password);
                                 session.connect();

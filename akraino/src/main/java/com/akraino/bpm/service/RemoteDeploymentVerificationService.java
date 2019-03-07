@@ -18,7 +18,7 @@ package com.akraino.bpm.service;
 
 public interface RemoteDeploymentVerificationService {
 	
-	public void executeScript(String remoteserver,String username,String password,int portnumber,String filename,
+	public void executeScript(String remoteserver,String username,String password,int port,String filename,
 			String fileparams,String srcdir,String destdir,int waittime,int iterations,String command);
 	
 

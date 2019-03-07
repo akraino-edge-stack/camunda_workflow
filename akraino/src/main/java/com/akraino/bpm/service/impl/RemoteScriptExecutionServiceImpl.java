@@ -41,14 +41,14 @@ public class RemoteScriptExecutionServiceImpl implements RemoteScriptExecutionSe
 	 * @param remoteserver the remote server to execute on
 	 * @param username the user name on the remote server
 	 * @param password the password for the user
-	 * @param portnumber the port number on the remote server
+	 * @param port the port number on the remote server
 	 * @param filename not used
 	 * @param fileparams not used 
 	 * @param srcdir not used
 	 * @param destdir not used
 	 * @param command the command to execute
 	 */
-	public void executeRemoteScript(String remoteserver,String username,String password,int portnumber,String filename,
+	public void executeRemoteScript(String remoteserver,String username,String password,int port,String filename,
 			String fileparams,String srcdir,String destdir,String command)  {
 		
 		//String filepath=destdir+"/"+filename+"  "+(fileparams!=null?fileparams.replaceAll(",", "  "):" ");
@@ -56,10 +56,10 @@ public class RemoteScriptExecutionServiceImpl implements RemoteScriptExecutionSe
 		Session session=null;
 		BufferedReader reader =null;
 		try {
-			//tranferFile(remoteserver,portnumber,username,password,filename,srcdir,destdir);
+			//tranferFile(remoteserver,port,username,password,filename,srcdir,destdir);
 			logger.debug("executing the script  "+command);
 			JSch jsch = new JSch();
-			session = jsch.getSession(username, remoteserver, portnumber);
+			session = jsch.getSession(username, remoteserver, port);
 			session.setConfig("StrictHostKeyChecking", "no");
 			session.setPassword(password);
 			session.connect();

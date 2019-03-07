@@ -18,6 +18,6 @@ package com.akraino.bpm.service;
 
 public interface RemoteScriptExecutionService {
 	
-	public void executeRemoteScript(String remoteserver,String username,String password,int portnumber,String filename,String fileparams,String srcdir,String destdir,String command);
+	public void executeRemoteScript(String remoteserver,String username,String password,int port,String filename,String fileparams,String srcdir,String destdir,String command);
 	
 }
