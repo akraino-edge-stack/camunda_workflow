@@ -58,7 +58,7 @@ public class CamundaRestController {
 	public ResponseEntity<BuildResponse> deploy(@RequestBody Deploy deploy) {
 		logger.debug("Request received for deploy {}  ",deploy.toString());
 		asyncProcessExecutorService.executeDeployProcess(deploy);
-		return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,"in progress",deploy.getSitename(),null,null,null),HttpStatus.OK);
+		return new ResponseEntity<BuildResponse>(new BuildResponse(null,null,null,null,"in progress - hw/os",deploy.getSitename(),null,null,null),HttpStatus.OK);
 	}
 
 	@PostMapping("/multinodedeploy/")
