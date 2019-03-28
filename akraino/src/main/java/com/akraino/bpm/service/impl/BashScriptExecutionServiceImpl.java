@@ -31,31 +31,28 @@ import com.akraino.bpm.service.BashScriptExecutionService;
 @Service("bashscriptExecutionService")
 public class BashScriptExecutionServiceImpl implements BashScriptExecutionService{
 
-	private static Logger logger = LoggerFactory.getLogger(BashScriptExecutionServiceImpl.class);
-	
-	public void executeScript(String filepatch)  {
-		
-		try {
-			logger.debug("Executing the script.............");
-			Process p = Runtime.getRuntime().exec(filepatch);
-			p.waitFor();
-			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = "";
-            while ((line = input.readLine()) != null) {
-            	logger.debug(line);
-            	if(line.contains("Error:")) {
-            		throw new TaskExecutorException("problem while executing the Bash script. "+line);
-            	}
-            	
-            }
-			
-		} catch (IOException e) {
-			throw new TaskExecutorException(filepatch + " not found.");
-		} catch (InterruptedException e) {
-			throw new TaskExecutorException("problem while executing the script "+filepatch);
-		}
-		
-		
-	}
+        private static Logger logger = LoggerFactory.getLogger(BashScriptExecutionServiceImpl.class);
 
+        public void executeScript(String filepatch)  {
+
+                try {
+                        logger.debug("Executing the script.............");
+                        Process p = Runtime.getRuntime().exec(filepatch);
+                        BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                        String line = "";
+                        while ((line = input.readLine()) != null) {
+                            logger.debug(line);
+                        }
+                        p.waitFor();
+                        logger.debug("Script exit code :"+p.exitValue());
+                        if(p.exitValue()!=0) {
+                            throw new TaskExecutorException("problem while executing the script. exit code :"+p.exitValue());
+                        }
+                } catch (IOException e) {
+                        throw new TaskExecutorException(filepatch + " not found.");
+                } catch (InterruptedException e) {
+                        throw new TaskExecutorException("problem while executing the script "+filepatch);
+                }
+        }
 }
+
