@@ -8,7 +8,7 @@ camunda.bpm:
   buildresponseurl: http://192.168.2.44:8080/AECPortalMgmt/edgeSites/status
   tokenId: YWthZG1pbg==:9FCBA840BD274292F4DCC995BECE3D09
 logging:
-  file: /var/log/scriptexecutor.log
+  file: /var/log/akraino/scriptexecutor.log
   level:
     com.camunda.bpm: debug
     org.camunda.bpm: warn
