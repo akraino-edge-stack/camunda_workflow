@@ -109,9 +109,6 @@ public class Onap {
 	}
 
 
-	
-
-
 	public String getFilename() {
 		return filename;
 	}
@@ -183,28 +180,20 @@ public class Onap {
 		this.filetrasferscript = filetrasferscript;
 	}
 
-	
-
 	public String getFiletransferparams() {
 		return filetransferparams;
 	}
-
 
 	public void setFiletransferparams(String filetransferparams) {
 		this.filetransferparams = filetransferparams;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Onap [sitename=" + sitename + ", remoteserver=" + remoteserver + ", username=" + username
 				+ ", password=" + password + ", port=" + port + ", srcdir=" + srcdir + ", destdir="
-				+ destdir + ", filename=" + filename + ", fileparams=" + fileparams + ", deploymentverifier="
-				+ deploymentverifier + ", verifierparams=" + verifierparams + ", noofiterations=" + noofiterations
+				+ destdir + ", filename=" + filename + ", fileparams=" + fileparams + ", noofiterations=" + noofiterations
 				+ ", waittime=" + waittime + ", filetrasferscript=" + filetrasferscript + ", filetransferparams="
 				+ filetransferparams + "]";
 	}
-
-
-
- }
+}
